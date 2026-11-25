@@ -1,0 +1,3688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>365 Días Contigo — Feliz Cumpleaños Anye</title>
+
+  <!-- Tipografías: Outfit + Fraunces (Acto 1 y 3) + Silkscreen & Press Start 2P (Pixel Art Acto 2) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Outfit:wght@300;400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --sky-50: #f0f9ff;
+      --sky-100: #e0f2fe;
+      --sky-200: #bae6fd;
+      --sky-300: #7dd3fc;
+      --sky-500: #0ea5e9;
+      --sky-700: #0369a1;
+
+      --pink-50: #fdf2f8;
+      --pink-100: #fce7f3;
+      --pink-300: #f9a8d4;
+      --pink-500: #ec4899;
+      --pink-600: #db2777;
+
+      --gold-400: #facc15;
+      --gold-500: #eab308;
+      --green-500: #22c55e;
+      --green-600: #16a34a;
+      --red-500: #ef4444;
+
+      --white: #ffffff;
+      --slate-900: #0f172a;
+      --slate-700: #334155;
+      --slate-600: #475569;
+
+      /* Paleta Pixel Art Cozy (Acto 2) */
+      --px-panel: #fffbeb;
+
+      --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--white);
+      color: var(--slate-900);
+      overflow-x: hidden;
+    }
+
+    body.lock-scroll {
+      overflow: hidden;
+      height: 100dvh;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    /* Canvas flotante para la lluvia suave de girasoles (solo Acto 1) */
+    #sunflower-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 40;
+      transition: opacity 0.4s ease;
+    }
+
+    /* =========================================================
+       ACTO 1: WRAPPED (25 DE NOVIEMBRE - 25 DE NOVIEMBRE)
+       ========================================================= */
+    #acto-1-wrapped {
+      position: relative;
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(145deg, var(--sky-100) 0%, var(--white) 52%, var(--pink-100) 100%);
+      transition: background 0.8s var(--ease-out-expo);
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(65px);
+      opacity: 0.65;
+      pointer-events: none;
+      transition: transform 1.1s var(--ease-out-expo), background 0.9s ease;
+      z-index: 0;
+    }
+
+    .orb-sky {
+      width: 290px;
+      height: 290px;
+      background: var(--sky-300);
+      top: -60px;
+      left: -70px;
+    }
+
+    .orb-pink {
+      width: 270px;
+      height: 270px;
+      background: var(--pink-300);
+      bottom: -50px;
+      right: -60px;
+    }
+
+    .progress-header {
+      position: relative;
+      z-index: 20;
+      padding: 14px 16px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-bars {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .progress-track {
+      height: 3.5px;
+      background: rgba(15, 23, 42, 0.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--sky-500), var(--pink-500));
+      border-radius: 999px;
+      transition: width 0.08s linear;
+    }
+
+    .wrapped-brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sky-700);
+      padding: 0 2px;
+    }
+
+    .wrapped-brand span.date-pill {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(14, 165, 233, 0.25);
+      color: var(--pink-500);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+    }
+
+    .stories-viewport {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      width: 100%;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    .stories-track {
+      display: flex;
+      width: 500%;
+      height: 100%;
+      transition: transform 0.65s var(--ease-out-expo);
+      will-change: transform;
+    }
+
+    .story-slide {
+      width: 20%;
+      height: 100%;
+      padding: 8px 20px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .story-card {
+      width: 100%;
+      max-width: 410px;
+      height: 100%;
+      max-height: 680px;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      box-shadow:
+        0 20px 45px -15px rgba(14, 165, 233, 0.16),
+        0 10px 25px -10px rgba(236, 72, 153, 0.12);
+      border-radius: 28px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      opacity: 0.45;
+      transform: scale(0.94);
+      transition: transform 0.65s var(--ease-out-expo), opacity 0.55s ease;
+    }
+
+    .story-slide.active .story-card {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .quarter-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quarter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--sky-100), var(--pink-100));
+      color: var(--sky-700);
+      border: 1px solid rgba(125, 211, 252, 0.45);
+    }
+
+    .quarter-months {
+      font-family: 'Fraunces', serif;
+      font-size: 1.32rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .collage-frame {
+      position: relative;
+      width: 100%;
+      flex: 1;
+      min-height: 220px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--sky-50), var(--pink-50));
+      border: 1px solid rgba(14, 165, 233, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+    }
+
+    .collage-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 6s ease-out;
+    }
+
+    .story-slide.active .collage-frame img {
+      transform: scale(1.04);
+    }
+
+    .story-caption-box {
+      background: linear-gradient(180deg, rgba(240, 249, 255, 0.75), rgba(253, 242, 248, 0.75));
+      border: 1px solid rgba(249, 168, 212, 0.35);
+      border-radius: 18px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .story-caption-text {
+      font-size: 0.96rem;
+      line-height: 1.5;
+      color: var(--slate-600);
+      font-weight: 400;
+    }
+
+    .bridge-card {
+      justify-content: center;
+      text-align: center;
+      padding: 32px 24px;
+      gap: 22px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(224, 242, 254, 0.85), rgba(252, 231, 243, 0.85));
+    }
+
+    .bridge-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.75rem;
+      line-height: 1.25;
+      color: var(--slate-900);
+    }
+
+    .bridge-title em {
+      font-style: italic;
+      background: linear-gradient(90deg, var(--sky-500), var(--pink-500));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .bridge-sub {
+      font-size: 0.98rem;
+      color: var(--slate-600);
+      line-height: 1.55;
+      max-width: 290px;
+      margin: 0 auto;
+    }
+
+    .scroll-down-cta {
+      margin-top: 12px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--sky-700);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
+
+    .scroll-pill {
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--sky-500), var(--pink-500));
+      color: var(--white);
+      box-shadow: 0 10px 25px -6px rgba(14, 165, 233, 0.45);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.25s ease;
+    }
+
+    .scroll-down-cta:active .scroll-pill {
+      transform: scale(0.96);
+    }
+
+    .chevron-bounce {
+      width: 22px;
+      height: 22px;
+      stroke: var(--pink-500);
+      animation: floatDown 1.6s infinite ease-in-out;
+    }
+
+    @keyframes floatDown {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(7px); opacity: 1; }
+    }
+
+    /* =========================================================
+       ACTO 2: AVENTURA PIXEL ART (4 ESTACIONES)
+       ========================================================= */
+    #acto-2-minijuego {
+      width: 100%;
+      min-height: 100dvh;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.85) 0%, transparent 25%),
+        radial-gradient(circle at 82% 18%, rgba(252, 231, 243, 0.85) 0%, transparent 28%),
+        linear-gradient(180deg, #e0f2fe 0%, #dcfce7 42%, #bbf7d0 100%);
+      position: relative;
+      padding: 24px 16px 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      border-top: 4px solid #7dd3fc;
+      overflow: hidden;
+    }
+
+    .pixel-clouds {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      pointer-events: none;
+      opacity: 0.7;
+      background-image:
+        radial-gradient(circle at 15% 40%, #fff 16px, transparent 17px),
+        radial-gradient(circle at 19% 35%, #fff 20px, transparent 21px),
+        radial-gradient(circle at 23% 42%, #fff 15px, transparent 16px),
+        radial-gradient(circle at 78% 30%, #fff 18px, transparent 19px),
+        radial-gradient(circle at 83% 26%, #fff 22px, transparent 23px),
+        radial-gradient(circle at 88% 32%, #fff 16px, transparent 17px);
+    }
+
+    .pixel-font-title {
+      font-family: 'Press Start 2P', monospace;
+      line-height: 1.45;
+    }
+
+    .acto2-header {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 440px;
+      background: var(--px-panel);
+      border: 3px solid var(--slate-900);
+      box-shadow: 0 5px 0 var(--slate-900);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .acto2-badge {
+      display: inline-block;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--pink-100);
+      color: var(--pink-600);
+      border: 2px solid var(--slate-900);
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .acto2-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.92rem;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+
+    .acto2-subtitle {
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      line-height: 1.4;
+    }
+
+    .stations-hud {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.9);
+      border: 3px solid var(--slate-900);
+      box-shadow: 0 4px 0 var(--slate-900);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.78rem;
+    }
+
+    .hud-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .hud-dot {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--slate-900);
+      background: #e2e8f0;
+      border-radius: 4px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .hud-dot.done {
+      background: var(--green-500);
+      transform: scale(1.1);
+    }
+
+    .hud-dot.active {
+      background: var(--gold-400);
+      animation: pulseDot 1.2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+    }
+
+    .minimap-board {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 440px;
+      height: 490px;
+      background:
+        radial-gradient(#4ade80 2px, transparent 2px) 0 0 / 24px 24px,
+        radial-gradient(#86efac 2px, transparent 2px) 12px 12px / 24px 24px,
+        linear-gradient(180deg, #d1fae5 0%, #a7f3d0 100%);
+      border: 4px solid var(--slate-900);
+      box-shadow: 0 8px 0 var(--slate-900);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .map-svg-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .map-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 5;
+      transition: transform 0.2s ease;
+    }
+
+    .map-node:active {
+      transform: translate(-50%, -50%) scale(0.94);
+    }
+
+    .node-pedestal {
+      width: 62px;
+      height: 62px;
+      border-radius: 14px;
+      border: 3px solid var(--slate-900);
+      box-shadow: 0 5px 0 var(--slate-900);
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.65rem;
+      position: relative;
+      transition: all 0.35s ease;
+    }
+
+    .map-node.locked .node-pedestal {
+      background: #cbd5e1;
+      filter: grayscale(0.9);
+      opacity: 0.78;
+    }
+
+    .map-node.unlocked .node-pedestal {
+      background: linear-gradient(180deg, #fef08a 0%, #facc15 100%);
+      animation: bounceStation 1.5s infinite ease-in-out;
+    }
+
+    .map-node.completed .node-pedestal {
+      background: linear-gradient(180deg, #bbf7d0 0%, #4ade80 100%);
+    }
+
+    .node-check {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 22px;
+      height: 22px;
+      background: var(--green-600);
+      color: #fff;
+      border: 2px solid var(--slate-900);
+      border-radius: 6px;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.72rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-node.completed .node-check {
+      display: flex;
+    }
+
+    .node-label {
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--white);
+      color: var(--slate-900);
+      border: 2px solid var(--slate-900);
+      box-shadow: 0 2px 0 var(--slate-900);
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .map-node.unlocked .node-label {
+      background: var(--pink-500);
+      color: var(--white);
+    }
+
+    @keyframes bounceStation {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    #minimap-avatar {
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      transform: translate(-50%, -85%);
+      z-index: 10;
+      pointer-events: none;
+      transition: left 0.85s cubic-bezier(0.34, 1.56, 0.64, 1), top 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: drop-shadow(0 4px 0 rgba(15, 23, 42, 0.35));
+    }
+
+    #minimap-avatar.walking {
+      animation: avatarHop 0.28s infinite alternate;
+    }
+
+    @keyframes avatarHop {
+      from { transform: translate(-50%, -85%) scaleY(1); }
+      to { transform: translate(-50%, -98%) scaleY(1.06); }
+    }
+
+    .avatar-tag {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.62rem;
+      background: var(--sky-500);
+      color: #fff;
+      border: 2px solid var(--slate-900);
+      padding: 1px 6px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+
+    #acto2-complete-card {
+      display: none;
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(160deg, #fffbeb 0%, #fce7f3 55%, #e0f2fe 100%);
+      border: 4px solid var(--slate-900);
+      box-shadow: 0 7px 0 var(--slate-900);
+      border-radius: 18px;
+      padding: 20px 18px;
+      text-align: center;
+      flex-direction: column;
+      gap: 12px;
+      animation: popIn 0.5s var(--ease-out-expo);
+    }
+
+    #acto2-complete-card.visible {
+      display: flex;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* ================= SISTEMA DE MODALES PIXEL ART ================= */
+    .pixel-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(4px);
+      z-index: 70;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      overflow-y: auto;
+    }
+
+    .pixel-modal-backdrop.open {
+      display: flex;
+    }
+
+    .pixel-window {
+      width: 100%;
+      max-width: 430px;
+      max-height: 92dvh;
+      overflow-y: auto;
+      background: var(--px-panel);
+      border: 4px solid var(--slate-900);
+      box-shadow: 0 8px 0 var(--slate-900);
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      animation: popIn 0.35s var(--ease-out-expo);
+    }
+
+    .pixel-window-bar {
+      background: linear-gradient(90deg, var(--sky-500), var(--pink-500));
+      border-bottom: 3px solid var(--slate-900);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+    }
+
+    .pixel-window-title {
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .pixel-close-btn {
+      width: 30px;
+      height: 30px;
+      background: #fff;
+      color: var(--slate-900);
+      border: 2px solid var(--slate-900);
+      box-shadow: 0 2px 0 var(--slate-900);
+      border-radius: 6px;
+      font-family: 'Silkscreen', monospace;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .pixel-window-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .px-btn {
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 12px 16px;
+      border: 3px solid var(--slate-900);
+      box-shadow: 0 4px 0 var(--slate-900);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .px-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--slate-900);
+    }
+
+    .px-btn-primary {
+      background: linear-gradient(180deg, #38bdf8, #0284c7);
+      color: #fff;
+    }
+
+    .px-btn-pink {
+      background: linear-gradient(180deg, #f472b6, #db2777);
+      color: #fff;
+    }
+
+    .px-btn-green {
+      background: linear-gradient(180deg, #4ade80, #16a34a);
+      color: #fff;
+    }
+
+    .px-btn-gold {
+      background: linear-gradient(180deg, #fde047, #eab308);
+      color: var(--slate-900);
+    }
+
+    .romantic-box {
+      background: linear-gradient(160deg, #f0f9ff 0%, #fdf2f8 100%);
+      border: 3px solid var(--slate-900);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.94rem;
+      line-height: 1.5;
+      color: var(--slate-900);
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+    }
+
+    /* ESTACIÓN 1: QUIZ */
+    .quiz-question-card {
+      background: #fff;
+      border: 3px solid var(--slate-900);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .quiz-question-text {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      line-height: 1.35;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 12px 14px;
+      background: #fff;
+      border: 3px solid var(--slate-900);
+      box-shadow: 0 3px 0 var(--slate-900);
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--slate-900);
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .quiz-opt-letter {
+      flex-shrink: 0;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.82rem;
+      background: var(--sky-100);
+      border: 2px solid var(--slate-900);
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 1px;
+    }
+
+    .quiz-opt-btn.wrong {
+      background: #fee2e2;
+      border-color: #b91c1c;
+      color: #991b1b;
+      animation: shakeX 0.35s ease;
+    }
+
+    .quiz-opt-btn.wrong .quiz-opt-letter {
+      background: var(--red-500);
+      color: #fff;
+    }
+
+    .quiz-opt-btn.correct {
+      background: #dcfce7;
+      border-color: #15803d;
+      color: #14532d;
+    }
+
+    .quiz-opt-btn.correct .quiz-opt-letter {
+      background: var(--green-500);
+      color: #fff;
+    }
+
+    @keyframes shakeX {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .quiz-feedback-warn {
+      background: #fef2f2;
+      border: 2px solid #ef4444;
+      color: #b91c1c;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* ESTACIÓN 2: MAZORCAS */
+    .corn-hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 3px solid var(--slate-900);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.78rem;
+    }
+
+    #corn-canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: 330px;
+      border: 3px solid var(--slate-900);
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 65%, #86efac 65%, #4ade80 100%);
+      touch-action: none;
+    }
+
+    #corn-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .corn-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ESTACIÓN 3: FAMILIA */
+    .family-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .family-card {
+      background: #fff;
+      border: 3px solid var(--slate-900);
+      box-shadow: 0 3px 0 var(--slate-900);
+      border-radius: 12px;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.15s ease, background 0.25s ease;
+    }
+
+    .family-card.full-span {
+      grid-column: span 2;
+    }
+
+    .family-card.helped {
+      background: #dcfce7;
+      border-color: #15803d;
+    }
+
+    .family-card.selected {
+      background: #fef9c3;
+    }
+
+    .family-emoji {
+      font-size: 1.85rem;
+      line-height: 1;
+      transition: transform 0.25s ease;
+    }
+
+    .family-card.dogs-happy .family-emoji {
+      animation: dogJump 0.35s infinite alternate;
+    }
+
+    @keyframes dogJump {
+      from { transform: translateY(0) rotate(-6deg); }
+      to { transform: translateY(-9px) rotate(6deg); }
+    }
+
+    .family-name {
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+
+    .family-status {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--sky-700);
+    }
+
+    .family-card.helped .family-status {
+      color: #15803d;
+    }
+
+    .family-dialogue-panel {
+      background: #fff;
+      border: 3px solid var(--slate-900);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ESTACIÓN 4: SERPIENTES Y ESCALERAS */
+    .snakes-legend {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 2px solid var(--slate-900);
+      border-radius: 10px;
+      padding: 7px 10px;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.72rem;
+    }
+
+    .board-container {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      border: 4px solid var(--slate-900);
+      box-shadow: 0 5px 0 var(--slate-900);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      width: 100%;
+      height: 100%;
+    }
+
+    .board-cell {
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3px 4px;
+      position: relative;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--slate-700);
+    }
+
+    .board-cell.even { background: #f0f9ff; }
+    .board-cell.odd { background: #fdf2f8; }
+    .board-cell.ladder-start { background: #dcfce7; }
+    .board-cell.slide-start { background: #fee2e2; }
+    .board-cell.goal-cell { background: linear-gradient(135deg, #fef08a, #f9a8d4); }
+
+    .cell-icon {
+      font-size: 0.85rem;
+      align-self: flex-end;
+      line-height: 1;
+    }
+
+    #board-overlay-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .board-token {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      font-size: 1.25rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      transition: left 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), top 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 6;
+      filter: drop-shadow(0 2px 0 rgba(15, 23, 42, 0.4));
+    }
+
+    .dice-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #fff;
+      border: 3px solid var(--slate-900);
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    .dice-box {
+      width: 46px;
+      height: 46px;
+      background: #fef08a;
+      border: 3px solid var(--slate-900);
+      box-shadow: 0 3px 0 var(--slate-900);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.1rem;
+      color: var(--slate-900);
+    }
+
+    .dice-box.rolling {
+      animation: diceSpin 0.35s ease;
+    }
+
+    @keyframes diceSpin {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.18); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    /* =========================================================
+       ACTO 3: CIELO NOCTURNO REALISTA Y CONSTELACIONES PROPIAS
+       ========================================================= */
+    #acto-3-constelaciones {
+      display: none;
+      position: relative;
+      width: 100%;
+      min-height: 100dvh;
+      background: radial-gradient(ellipse at 50% 20%, #0d1d42 0%, #050a1c 58%, #02040a 100%);
+      color: #f8fafc;
+      overflow: hidden;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 16px 28px;
+      border-top: 2px solid rgba(125, 211, 252, 0.35);
+    }
+
+    #acto-3-constelaciones.unlocked {
+      display: flex;
+    }
+
+    #night-sky-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .milky-way-glow {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse at 30% 35%, rgba(56, 189, 248, 0.11) 0%, transparent 48%),
+        radial-gradient(ellipse at 72% 60%, rgba(236, 72, 153, 0.09) 0%, transparent 45%),
+        linear-gradient(128deg, transparent 22%, rgba(99, 102, 241, 0.08) 48%, rgba(186, 230, 253, 0.09) 53%, transparent 78%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sky-header {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 440px;
+      margin: 0 auto;
+      background: rgba(6, 12, 31, 0.62);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(186, 230, 253, 0.22);
+      border-radius: 22px;
+      padding: 14px 18px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    .astro-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      background: rgba(14, 165, 233, 0.14);
+      border: 1px solid rgba(125, 211, 252, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .sky-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .sky-subtitle {
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .star-stage {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 460px;
+      height: 460px;
+      margin: 0 auto;
+    }
+
+    .guide-star-btn {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 12;
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+
+    .guide-star-btn:active {
+      transform: translate(-50%, -50%) scale(0.92);
+    }
+
+    .star-core-wrap {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .star-halo {
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--star-glow, rgba(125, 211, 252, 0.55)) 0%, transparent 72%);
+      animation: starPulse 2.6s infinite ease-in-out;
+    }
+
+    .star-flare {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow:
+        0 0 14px 4px #ffffff,
+        0 0 28px 10px var(--star-glow, rgba(125, 211, 252, 0.85));
+    }
+
+    .star-flare::before,
+    .star-flare::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(90deg, transparent, #ffffff, transparent);
+      border-radius: 999px;
+    }
+
+    .star-flare::before {
+      width: 54px;
+      height: 2px;
+    }
+
+    .star-flare::after {
+      width: 2px;
+      height: 54px;
+      background: linear-gradient(180deg, transparent, #ffffff, transparent);
+    }
+
+    @keyframes starPulse {
+      0%, 100% { transform: scale(0.92); opacity: 0.72; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+
+    .guide-star-label {
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #f1f5f9;
+      background: rgba(6, 12, 31, 0.72);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 4px 11px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .guide-star-btn.discovered .guide-star-label {
+      border-color: rgba(74, 222, 128, 0.65);
+      background: rgba(6, 78, 59, 0.65);
+      color: #dcfce7;
+    }
+
+    .sky-footer {
+      position: relative;
+      z-index: 10;
+      max-width: 440px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sky-counter-pill {
+      display: inline-block;
+      margin: 0 auto;
+      font-size: 0.8rem;
+      color: #bae6fd;
+      background: rgba(15, 23, 42, 0.68);
+      border: 1px solid rgba(125, 211, 252, 0.25);
+      padding: 6px 16px;
+      border-radius: 999px;
+    }
+
+    .sky-finale-btn {
+      display: none;
+      margin: 4px auto 0;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: linear-gradient(135deg, #0ea5e9, #ec4899);
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.94rem;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+      animation: popIn 0.5s var(--ease-out-expo);
+    }
+
+    .sky-finale-btn.visible {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* =========================================================
+       VISOR DE CONSTELACIÓN (ZOOM ESPACIAL + DIBUJO ESTELAR)
+       ========================================================= */
+    #constellation-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 85;
+      background: radial-gradient(circle at 50% 34%, rgba(15, 34, 78, 0.92) 0%, rgba(3, 6, 18, 0.97) 75%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 16px 24px;
+      overflow-y: auto;
+      opacity: 0;
+      transform: scale(0.86);
+      transition: opacity 0.65s var(--ease-out-expo), transform 0.65s var(--ease-out-expo);
+    }
+
+    #constellation-viewer.active {
+      display: flex;
+    }
+
+    #constellation-viewer.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .viewer-top-bar {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .viewer-tag {
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      background: rgba(14, 165, 233, 0.15);
+      border: 1px solid rgba(125, 211, 252, 0.3);
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    .viewer-close-x {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(15, 23, 42, 0.7);
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .constellation-svg-box {
+      position: relative;
+      width: 100%;
+      max-width: 390px;
+      aspect-ratio: 4 / 3;
+      margin: 6px auto;
+      border-radius: 24px;
+      background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.12) 0%, rgba(2, 6, 23, 0.45) 75%);
+      border: 1px solid rgba(186, 230, 253, 0.18);
+      box-shadow: inset 0 0 40px rgba(14, 165, 233, 0.12);
+      overflow: hidden;
+    }
+
+    #constellation-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .const-line {
+      stroke: rgba(186, 230, 253, 0.85);
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.85));
+      transition: stroke-dashoffset 1.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .const-line.accent-gold {
+      stroke: rgba(253, 224, 71, 0.9);
+      filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.9));
+    }
+
+    .const-line.accent-pink {
+      stroke: rgba(249, 168, 212, 0.92);
+      filter: drop-shadow(0 0 6px rgba(236, 72, 153, 0.9));
+    }
+
+    .constellation-card {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(9, 17, 40, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(186, 230, 253, 0.25);
+      border-radius: 24px;
+      padding: 18px 18px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    .constellation-card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.32rem;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    .constellation-card-text {
+      font-size: 0.93rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+      font-weight: 300;
+    }
+
+    .viewer-back-btn {
+      margin-top: 4px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(125, 211, 252, 0.45);
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(236, 72, 153, 0.3));
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .viewer-back-btn:active {
+      transform: scale(0.97);
+    }
+  </style>
+
+<style id="rediseno">
+/* ===== ACTO 1: look cumpleaños ===== */
+#acto-1-wrapped{background:radial-gradient(circle at 15% 8%,#bae6fd 0,transparent 45%),radial-gradient(circle at 88% 92%,#fbcfe8 0,transparent 48%),radial-gradient(circle at 80% 15%,#fef3c7 0,transparent 30%),linear-gradient(160deg,#e0f2fe,#fff7fb 55%,#fdf2f8)}
+#acto-1-wrapped::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.6;
+background-image:radial-gradient(circle,#f472b6 0 3px,transparent 4px),radial-gradient(circle,#38bdf8 0 2.5px,transparent 3.5px),radial-gradient(circle,#facc15 0 3px,transparent 4px),radial-gradient(circle,#a78bfa 0 2px,transparent 3px);
+background-size:90px 110px,130px 150px,170px 140px,110px 190px;background-position:0 0,40px 60px,80px 20px,20px 100px;animation:confDrift 14s linear infinite}
+@keyframes confDrift{to{background-position:0 110px,40px 210px,80px 160px,20px 290px}}
+.balloon{position:absolute;bottom:-130px;width:46px;height:58px;border-radius:50% 50% 48% 48%;background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.8),transparent 26%),var(--c);opacity:.85;z-index:5;pointer-events:none;animation:balloonUp var(--d) ease-in var(--dl) infinite}
+.balloon::before{content:'';position:absolute;left:50%;bottom:-5px;margin-left:-5px;border:5px solid transparent;border-bottom:7px solid var(--c)}
+.balloon::after{content:'';position:absolute;left:50%;top:100%;width:1.5px;height:48px;background:rgba(15,23,42,.28);margin-top:2px}
+@keyframes balloonUp{0%{transform:translate(0,0) rotate(-5deg)}50%{transform:translate(14px,-60vh) rotate(5deg)}100%{transform:translate(-8px,-125vh) rotate(-4deg)}}
+.progress-track{height:5px;background:rgba(255,255,255,.7);box-shadow:inset 0 1px 2px rgba(15,23,42,.15)}
+.progress-fill{background:linear-gradient(90deg,#38bdf8,#ec4899,#facc15);box-shadow:0 0 8px rgba(236,72,153,.6)}
+.wrapped-brand{font-family:'Fraunces',serif;text-transform:none;letter-spacing:0;font-size:.9rem;font-style:italic;color:var(--pink-600)}
+.wrapped-brand span.date-pill{font-family:'Outfit',sans-serif;font-style:normal;background:linear-gradient(135deg,#fde68a,#fbcfe8);color:#9d174d;border:none;font-weight:700;box-shadow:0 3px 8px rgba(236,72,153,.25)}
+.story-slide:nth-child(1){--a1:#0ea5e9;--a2:#ec4899;--t:#e0f2fe}
+.story-slide:nth-child(2){--a1:#8b5cf6;--a2:#ec4899;--t:#f3e8ff}
+.story-slide:nth-child(3){--a1:#f59e0b;--a2:#f43f5e;--t:#fef3c7}
+.story-slide:nth-child(4){--a1:#14b8a6;--a2:#0ea5e9;--t:#ccfbf1}
+.story-slide:nth-child(5){--a1:#ec4899;--a2:#facc15;--t:#fce7f3}
+.story-card{background:linear-gradient(170deg,#fff 50%,var(--t,#fff));border:none;border-radius:34px;padding:22px 18px 20px;
+box-shadow:0 0 0 3px #fff,0 0 0 5px var(--a1,#0ea5e9),0 22px 40px -14px rgba(15,23,42,.28),0 8px 0 -2px var(--a2,#ec4899);backdrop-filter:none;-webkit-backdrop-filter:none}
+.quarter-badge{background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;border:3px solid #fff;box-shadow:0 6px 14px -4px var(--a2);transform:rotate(-3deg);padding:6px 16px}
+.story-slide.active .quarter-badge{animation:popIn .7s var(--ease-out-expo) both}
+.quarter-months{font-size:1.4rem;background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.story-slide.active .quarter-months{animation:fadeUp .7s .1s var(--ease-out-expo) both}
+.collage-frame{background:#fff;padding:10px 10px 12px;border:none;border-radius:8px;overflow:visible;box-shadow:0 12px 24px -8px rgba(15,23,42,.35),0 0 0 1px rgba(15,23,42,.06);transform:rotate(-2deg);transition:transform .8s var(--ease-out-expo)}
+.story-slide:nth-child(even) .collage-frame{transform:rotate(2deg)}
+.story-slide.active .collage-frame{transform:rotate(0);animation:fadeUp .8s .2s var(--ease-out-expo) both}
+.collage-frame::before{content:'';position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;background:repeating-linear-gradient(45deg,rgba(250,204,21,.85) 0 6px,rgba(253,230,138,.85) 6px 12px);transform:rotate(-3deg);z-index:3;box-shadow:0 2px 4px rgba(0,0,0,.15);border-radius:2px}
+.collage-frame img{border-radius:4px}
+.story-caption-box{background:#fff;border:2.5px dashed var(--a1);border-radius:24px;position:relative;box-shadow:5px 5px 0 var(--a2)}
+.story-caption-box::before{content:'';position:absolute;top:-9px;left:50%;width:16px;height:16px;margin-left:-8px;background:var(--a2);transform:rotate(45deg);border-radius:3px;box-shadow:0 0 0 3px #fff}
+.story-slide.active .story-caption-box{animation:fadeUp .8s .35s var(--ease-out-expo) both}
+.story-caption-text{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:1.05rem;color:var(--slate-700)}
+.bridge-card{background:radial-gradient(circle at 20% 15%,rgba(56,189,248,.3),transparent 40%),radial-gradient(circle at 85% 85%,rgba(236,72,153,.3),transparent 45%),linear-gradient(170deg,#fff,#fdf2f8)}
+.bridge-title{font-size:2rem}
+.scroll-pill{background:linear-gradient(110deg,#0ea5e9,#ec4899,#f59e0b,#ec4899,#0ea5e9);background-size:250% 100%;animation:shimmer 3.5s linear infinite;border:3px solid #fff}
+@keyframes shimmer{to{background-position:-250% 0}}
+@keyframes popIn{from{opacity:0;transform:rotate(-3deg) scale(.4)}to{opacity:1;transform:rotate(-3deg) scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1}}
+/* ===== ESTACIÓN 4: tablero con texturas ===== */
+.snakes-legend{background:linear-gradient(180deg,#fff,#fef3c7);border-radius:14px}
+.board-container{border:10px solid #7c4a1e;border-radius:20px;background:#3f6b24;
+box-shadow:inset 0 0 0 2px #d9a066,0 0 0 3px #3b2209,0 8px 0 #3b2209,0 18px 28px rgba(0,0,0,.3)}
+.board-container::after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:10px;box-shadow:inset 0 0 26px rgba(0,0,0,.4)}
+.board-container::before{content:'';position:absolute;inset:0;z-index:5;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+.board-cell{border:none;margin:1.5px;border-radius:9px;color:#3b2209;box-shadow:inset 0 2px 0 rgba(255,255,255,.4),inset 0 -4px 0 rgba(0,0,0,.2),0 1px 2px rgba(0,0,0,.3)}
+.board-cell.even,.board-cell.odd{background:radial-gradient(circle at 22% 28%,rgba(255,255,255,.2) 0 2px,transparent 3px),radial-gradient(circle at 74% 72%,rgba(0,0,0,.14) 0 2px,transparent 3px),repeating-linear-gradient(100deg,rgba(255,255,255,.08) 0 2px,transparent 2px 7px),linear-gradient(145deg,#8ad468,#5fb043)}
+.board-cell.odd{background:radial-gradient(circle at 30% 70%,rgba(255,255,255,.2) 0 2px,transparent 3px),radial-gradient(circle at 70% 25%,rgba(0,0,0,.14) 0 2px,transparent 3px),repeating-linear-gradient(80deg,rgba(255,255,255,.08) 0 2px,transparent 2px 7px),linear-gradient(145deg,#b0e38a,#8ccd68)}
+.board-cell.ladder-start,.board-cell[data-n="1"]{background:linear-gradient(145deg,#fde68a,#f2c25b)}
+.board-cell.slide-start{background:linear-gradient(145deg,#fca5a5,#ef6b6b)}
+.board-cell.goal-cell{background:radial-gradient(circle,#fff7c2,#facc15 70%);animation:goalGlow 2s ease-in-out infinite alternate}
+@keyframes goalGlow{to{box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 0 14px #fde047}}
+.board-cell>span:first-child{align-self:flex-start;background:rgba(255,255,255,.9);border-radius:6px;padding:1px 4px;line-height:1.15;box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.cell-icon{font-size:1.05rem;filter:drop-shadow(0 2px 1px rgba(0,0,0,.35));position:relative;z-index:2}
+.board-cell.on{z-index:2;box-shadow:inset 0 0 0 3px #fde047,0 0 14px #fde047}
+.board-token{width:31px;height:31px;font-size:1.15rem;border:2px solid #fff;border-radius:50%;filter:none;background:radial-gradient(circle at 35% 30%,#fff,#fdf2f8 55%,#f9a8d4);box-shadow:0 4px 0 rgba(0,0,0,.3),0 8px 10px rgba(0,0,0,.28)}
+#token-cactus{background:radial-gradient(circle at 35% 30%,#fff,#ecfccb 55%,#86efac)}
+.dice-bar{border-radius:16px;background:linear-gradient(180deg,#fff,#fef3c7)}
+.dice-box{width:50px;height:50px;border:none;border-radius:14px;background:linear-gradient(145deg,#fff,#e5e7eb);color:#dc2626;font-family:'Fraunces',serif;font-weight:700;font-size:1.6rem;box-shadow:inset -3px -4px 6px rgba(0,0,0,.15),inset 3px 3px 5px #fff,0 4px 0 #9ca3af,0 9px 14px rgba(0,0,0,.25)}
+@keyframes diceSpin{0%{transform:rotate(0)}30%{transform:translateY(-16px) rotate(200deg) scale(1.15)}60%{transform:rotate(330deg)}80%{transform:translateY(-4px) rotate(352deg)}100%{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.balloon,#acto-1-wrapped::before,.scroll-pill{animation:none}}
+</style>
+
+<style id="rendimiento">
+/* Fluidez: solo transform/opacity (GPU), sin blur ni repintados por frame */
+.ambient-orb{filter:none;opacity:1;will-change:transform}
+.orb-sky{width:380px;height:380px;top:-110px;left:-110px;background:radial-gradient(circle,rgba(125,211,252,.85) 0,rgba(125,211,252,0) 68%)}
+.orb-pink{width:360px;height:360px;bottom:-100px;right:-100px;background:radial-gradient(circle,rgba(249,168,212,.85) 0,rgba(249,168,212,0) 68%)}
+#acto-1-wrapped::before{inset:-240px 0 0 0;background-size:120px 120px,240px 240px,240px 240px,120px 120px;background-position:0 0,60px 90px,150px 30px,40px 70px;animation:confFall 12s linear infinite;will-change:transform}
+@keyframes confFall{to{transform:translate3d(0,240px,0)}}
+.balloon{will-change:transform}
+.progress-fill{width:100%;transform:scaleX(0);transform-origin:left center;transition:none;will-change:transform}
+.scroll-pill{background:linear-gradient(110deg,#0ea5e9,#ec4899 55%,#f59e0b);animation:pillPulse 2.4s ease-in-out infinite}
+@keyframes pillPulse{50%{transform:scale(1.05)}}
+.story-card{will-change:transform,opacity}
+.quarter-badge{transform:none;rotate:-3deg}
+.story-slide.active .quarter-badge{animation:popIn2 .6s var(--ease-out-expo) both}
+@keyframes popIn2{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+.collage-frame,.story-slide:nth-child(even) .collage-frame{transform:none;rotate:-2deg;transition:rotate .8s var(--ease-out-expo)}
+.story-slide:nth-child(even) .collage-frame{rotate:2deg}
+.story-slide.active .collage-frame{transform:none;rotate:0deg}
+/* Imágenes en vertical 9:16 sin recortes ni zoom */
+.collage-frame{flex:none;min-height:0;width:fit-content;max-width:100%;margin-left:auto;margin-right:auto}
+.collage-frame img,.story-slide.active .collage-frame img{width:auto;max-width:100%;height:auto;max-height:max(220px,calc(100svh - 460px));aspect-ratio:9/16;object-fit:cover;margin:0 auto;transform:none;transition:none}
+.story-card:not(.bridge-card){height:auto;justify-content:center;gap:22px}
+</style>
+</head>
+<body class="lock-scroll">
+
+  <!-- Canvas donde caen los girasoles suaves (solo en Acto 1) -->
+  <canvas id="sunflower-canvas"></canvas>
+
+  <!-- =========================================================
+       ACTO 1: WRAPPED (25 DE NOVIEMBRE - 25 DE NOVIEMBRE)
+       ========================================================= -->
+  <section id="acto-1-wrapped" aria-label="Resumen de nuestro año">
+    <div class="ambient-orb orb-sky" id="orb-sky"></div>
+    <div class="ambient-orb orb-pink" id="orb-pink"></div>
+
+    <header class="progress-header">
+      <div class="progress-bars">
+        <div class="progress-track"><div class="progress-fill" data-bar="0"></div></div>
+        <div class="progress-track"><div class="progress-fill" data-bar="1"></div></div>
+        <div class="progress-track"><div class="progress-fill" data-bar="2"></div></div>
+        <div class="progress-track"><div class="progress-fill" data-bar="3"></div></div>
+        <div class="progress-track"><div class="progress-fill" data-bar="4"></div></div>
+      </div>
+      <div class="wrapped-brand">
+        <span>tu Año • Anye</span>
+        <span class="date-pill">25 Nov — 25 Nov</span>
+      </div>
+    </header>
+
+    <div class="stories-viewport" id="stories-viewport">
+      <div class="stories-track" id="stories-track">
+
+        <!-- TRIMESTRE 1 -->
+        <article class="story-slide active" data-index="0">
+          <div class="story-card">
+            <div class="quarter-header">
+              <span class="quarter-badge">Trimestre I</span>
+              <h2 class="quarter-months">25 de Noviembre — 25 de Febrero</h2>
+            </div>
+            <div class="collage-frame">
+              <img src="imagen1.jpg" alt="Collage Trimestre 1" onerror="handleMissingImage(this, 'imagen1.jpg')" />
+            </div>
+            <div class="story-caption-box">
+              <!-- EDITAR AQUÍ EL TEXTO DEL PRIMER TRIMESTRE -->
+              <p class="story-caption-text">hace un año estrenabas tu sombrero e ibamos juntos a la iglesia</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- TRIMESTRE 2 -->
+        <article class="story-slide" data-index="1">
+          <div class="story-card">
+            <div class="quarter-header">
+              <span class="quarter-badge">Trimestre II</span>
+              <h2 class="quarter-months">25 de Febrero — 25 de Mayo</h2>
+            </div>
+            <div class="collage-frame">
+              <img src="imagen2.jpg" alt="Collage Trimestre 2" onerror="handleMissingImage(this, 'imagen2.jpg')" />
+            </div>
+            <div class="story-caption-box">
+              <!-- EDITAR AQUÍ EL TEXTO DEL SEGUNDO TRIMESTRE -->
+              <p class="story-caption-text">te acuerdas cuando te obsesionaste con naruto?</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- TRIMESTRE 3 -->
+        <article class="story-slide" data-index="2">
+          <div class="story-card">
+            <div class="quarter-header">
+              <span class="quarter-badge">Trimestre III</span>
+              <h2 class="quarter-months">25 de Mayo — 25 de Agosto</h2>
+            </div>
+            <div class="collage-frame">
+              <img src="imagen3.jpg" alt="Collage Trimestre 3" onerror="handleMissingImage(this, 'imagen3.jpg')" />
+            </div>
+            <div class="story-caption-box">
+              <!-- EDITAR AQUÍ EL TEXTO DEL TERCER TRIMESTRE -->
+              <p class="story-caption-text">esas tardes en la finca</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- TRIMESTRE 4 -->
+        <article class="story-slide" data-index="3">
+          <div class="story-card">
+            <div class="quarter-header">
+              <span class="quarter-badge">Trimestre IV</span>
+              <h2 class="quarter-months">25 de Agosto — 25 de Noviembre</h2>
+            </div>
+            <div class="collage-frame">
+              <img src="imagen4.jpg" alt="Collage Trimestre 4" onerror="handleMissingImage(this, 'imagen4.jpg')" />
+            </div>
+            <div class="story-caption-box">
+              <!-- EDITAR AQUÍ EL TEXTO DEL CUARTO TRIMESTRE -->
+              <p class="story-caption-text">la universidad y todo el tiempo que pasamos juntos</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CIERRE / DESLIZAR HACIA ABAJO -->
+        <article class="story-slide" data-index="4">
+          <div class="story-card bridge-card">
+            <span class="quarter-badge">Capítulo Final</span>
+            <h2 class="bridge-title">Cuatro estaciones, <em>una misma historia</em></h2>
+            <p class="bridge-sub">
+              Cada mes dejó una huella distinta, pero lo que hace único este día apenas está por empezar.
+            </p>
+            <button class="scroll-down-cta" id="btn-scroll-down" type="button">
+              <span class="scroll-pill">Deslizar hacia abajo</span>
+              <svg class="chevron-bounce" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       ACTO 2: MINIMAP PIXEL ART & 4 ESTACIONES INTERACTIVAS
+       ========================================================= -->
+  <section id="acto-2-minijuego" aria-label="Aventura Pixel Art de Anye">
+    <div class="pixel-clouds"></div>
+
+    <div class="acto2-header">
+      <span class="acto2-badge">ACTO II • MODO AVENTURA</span>
+      <h2 class="acto2-title">El Mundo de Anye</h2>
+      <p class="acto2-subtitle">
+        Toca cada estación iluminada en el mapa para superar los 4 recuerdos y desbloquear el cielo nocturno.
+      </p>
+    </div>
+
+    <div class="stations-hud">
+      <span>ESTACIONES: <strong id="hud-count">0/4</strong></span>
+      <div class="hud-dots">
+        <div class="hud-dot active" id="hud-dot-1"></div>
+        <div class="hud-dot" id="hud-dot-2"></div>
+        <div class="hud-dot" id="hud-dot-3"></div>
+        <div class="hud-dot" id="hud-dot-4"></div>
+      </div>
+    </div>
+
+    <!-- MINIMAPA PIXEL ART -->
+    <div class="minimap-board" id="minimap-board">
+      <svg class="map-svg-layer" viewBox="0 0 400 490" preserveAspectRatio="none">
+        <path d="M 95 415 C 180 415, 295 390, 300 315 C 305 240, 105 255, 100 185 C 95 115, 235 125, 295 75"
+              fill="none" stroke="#92400e" stroke-width="34" stroke-linecap="round" />
+        <path d="M 95 415 C 180 415, 295 390, 300 315 C 305 240, 105 255, 100 185 C 95 115, 235 125, 295 75"
+              fill="none" stroke="#fef3c7" stroke-width="26" stroke-linecap="round" />
+        <path d="M 95 415 C 180 415, 295 390, 300 315 C 305 240, 105 255, 100 185 C 95 115, 235 125, 295 75"
+              fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="8 8" stroke-linecap="round" />
+
+        <g transform="translate(36, 290)">
+          <rect x="11" y="24" width="8" height="12" fill="#78350f"/>
+          <rect x="4" y="8" width="22" height="18" rx="4" fill="#16a34a"/>
+          <rect x="8" y="2" width="14" height="10" rx="3" fill="#22c55e"/>
+        </g>
+        <g transform="translate(335, 185)">
+          <rect x="11" y="24" width="8" height="12" fill="#78350f"/>
+          <rect x="4" y="8" width="22" height="18" rx="4" fill="#15803d"/>
+          <rect x="8" y="2" width="14" height="10" rx="3" fill="#4ade80"/>
+        </g>
+        <g transform="translate(42, 72)">
+          <rect x="11" y="24" width="8" height="12" fill="#78350f"/>
+          <rect x="4" y="8" width="22" height="18" rx="4" fill="#16a34a"/>
+          <rect x="8" y="2" width="14" height="10" rx="3" fill="#22c55e"/>
+        </g>
+        <text x="195" y="455" font-size="18">🌼</text>
+        <text x="225" y="445" font-size="15">🌱</text>
+        <text x="185" y="265" font-size="17">🌼</text>
+        <text x="330" y="395" font-size="17">🌷</text>
+        <text x="45" y="135" font-size="17">🌸</text>
+      </svg>
+
+      <!-- Estación 1: Tus Gustos -->
+      <button class="map-node unlocked" id="node-1" style="left: 24%; top: 84%;" onclick="openStation(1)">
+        <div class="node-pedestal">
+          <span>🥑</span>
+          <span class="node-check">✓</span>
+        </div>
+        <span class="node-label">1. Gustos</span>
+      </button>
+
+      <!-- Estación 2: Lluvia de Mazorcas -->
+      <button class="map-node locked" id="node-2" style="left: 75%; top: 64%;" onclick="openStation(2)">
+        <div class="node-pedestal">
+          <span>🌽</span>
+          <span class="node-check">✓</span>
+        </div>
+        <span class="node-label">2. Cosecha</span>
+      </button>
+
+      <!-- Estación 3: Familia -->
+      <button class="map-node locked" id="node-3" style="left: 25%; top: 38%;" onclick="openStation(3)">
+        <div class="node-pedestal">
+          <span>🏡</span>
+          <span class="node-check">✓</span>
+        </div>
+        <span class="node-label">3. Familia</span>
+      </button>
+
+      <!-- Estación 4: Serpientes y Escaleras -->
+      <button class="map-node locked" id="node-4" style="left: 74%; top: 16%;" onclick="openStation(4)">
+        <div class="node-pedestal">
+          <span>🎲</span>
+          <span class="node-check">✓</span>
+        </div>
+        <span class="node-label">4. Nosotros</span>
+      </button>
+
+      <!-- Avatar Pixel Art de Anye -->
+      <div id="minimap-avatar" style="left: 24%; top: 84%;">
+        <span class="avatar-tag">Anye</span>
+        <div id="minimap-avatar-sprite"></div>
+      </div>
+    </div>
+
+    <!-- Tarjeta final al completar las 4 estaciones (puente al Acto 3) -->
+    <div id="acto2-complete-card">
+      <span class="acto2-badge" style="margin:0 auto;">✨ ¡ACTO II COMPLETADO! ✨</span>
+      <h3 class="pixel-font-title" style="font-size:0.88rem; color:var(--slate-900);">
+        ¡Superaste todas las estaciones, Anye!
+      </h3>
+      <p style="font-size:0.93rem; color:var(--slate-700); line-height:1.5;">
+        Tus gustos, tu cosecha como futura ingeniera, el amor por tu familia y cada paso que damos juntos acaban de iluminar el cielo de tu cumpleaños.
+      </p>
+      <button class="px-btn px-btn-pink" type="button" onclick="unlockAndGoToActo3()">
+        🌌 Continuar al Acto III (Constelaciones)
+      </button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       ACTO 3: CIELO NOCTURNO REALISTA Y CONSTELACIONES DE ANYE
+       ========================================================= -->
+  <section id="acto-3-constelaciones" aria-label="Cielo nocturno y constelaciones de Anye">
+    <div class="milky-way-glow"></div>
+    <canvas id="night-sky-canvas"></canvas>
+
+    <header class="sky-header">
+      <span class="astro-pill">✦ Bóveda Celeste • 25 de Noviembre</span>
+      <h2 class="sky-title">El Universo de Anye</h2>
+      <p class="sky-subtitle">
+        Así lucía el cielo la noche en que naciste. Toca cada una de las 4 estrellas más brillantes para viajar hasta su constelación.
+      </p>
+    </header>
+
+    <!-- Escenario con las 4 estrellas guía brillantes -->
+    <div class="star-stage" id="star-stage">
+
+      <!-- Estrella 1: Gustos (Maíz, Tejer, Iglesia y sus cosas favoritas) -->
+      <button class="guide-star-btn" id="guide-star-1" style="left: 26%; top: 27%; --star-glow: rgba(74, 222, 128, 0.85);" onclick="openConstellation(1)">
+        <div class="star-core-wrap">
+          <div class="star-halo"></div>
+          <div class="star-flare"></div>
+        </div>
+        <span class="guide-star-label" id="star-label-1">✦ Tus Gustos</span>
+      </button>
+
+      <!-- Estrella 2: Carrera (Ingeniería Agronómica / Universidad) -->
+      <button class="guide-star-btn" id="guide-star-2" style="left: 75%; top: 23%; --star-glow: rgba(56, 189, 248, 0.88);" onclick="openConstellation(2)">
+        <div class="star-core-wrap">
+          <div class="star-halo"></div>
+          <div class="star-flare"></div>
+        </div>
+        <span class="guide-star-label" id="star-label-2">✦ Tu Vocación</span>
+      </button>
+
+      <!-- Estrella 3: Familia y Perritos -->
+      <button class="guide-star-btn" id="guide-star-3" style="left: 27%; top: 66%; --star-glow: rgba(250, 204, 21, 0.85);" onclick="openConstellation(3)">
+        <div class="star-core-wrap">
+          <div class="star-halo"></div>
+          <div class="star-flare"></div>
+        </div>
+        <span class="guide-star-label" id="star-label-3">✦ Tu Familia</span>
+      </button>
+
+      <!-- Estrella 4: Nosotros agarrados de la mano -->
+      <button class="guide-star-btn" id="guide-star-4" style="left: 74%; top: 69%; --star-glow: rgba(244, 114, 182, 0.9);" onclick="openConstellation(4)">
+        <div class="star-core-wrap">
+          <div class="star-halo"></div>
+          <div class="star-flare"></div>
+        </div>
+        <span class="guide-star-label" id="star-label-4">✦ Tú y Yo</span>
+      </button>
+
+    </div>
+
+    <footer class="sky-footer">
+      <div class="sky-counter-pill">
+        Constelaciones descubiertas: <strong id="sky-discovered-count">0/4</strong>
+      </div>
+      <button class="sky-finale-btn" id="sky-finale-btn" type="button" onclick="openConstellation('all')">
+        ✨ Ver todo tu cielo iluminado
+      </button>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       TEXTOS EDITABLES DE LAS CONSTELACIONES (ACTO 3)
+       Puedes editar libremente los títulos y mensajes aquí abajo
+       ========================================================= -->
+  <div hidden>
+    <!-- EDITAR AQUÍ: CONSTELACIÓN 1 (GUSTOS: MAÍZ, AGUJA DE TEJER, IGLESIA Y MÁS) -->
+    <span id="const-tag-1">Constelación I • Tu Esencia y Tus Gustos</span>
+    <h3 id="const-title-1">Todo lo que Te Hace Ser Tú</h3>
+    <p id="const-text-1">
+      En estas estrellas brillan las pequeñas cosas que llenan tus días: disfrutar un buen aguacate o una mazorca, la paciencia bonita con la que tejes, esa alegria con la que entonas cada cancion, la dulzura de preparar postres, tu fe al ir a la iglesia, las risas en familia, perderte en un libro o simplemente descansar durmiendo tranquila, Cada pequeña cosa te hace ser tú, amor nunca vayas a cambiar.
+    </p>
+
+    <!-- EDITAR AQUÍ: CONSTELACIÓN 2 (CARRERA: INGENIERÍA AGRONÓMICA) -->
+    <span id="const-tag-2">Constelación II • Ingeniería Agronómica</span>
+    <h3 id="const-title-2">La Constelación de tu Vocación</h3>
+    <p id="const-text-2">
+      Cada madrugada de estudio, cada práctica en campo, cada asoleada y cada esfuerzo en la universidad están trazando tu propio mapa en el cielo, Estudiar Ingenieria habla de lo que llevas dentro, sabes cuidar la vida, tener paciencia con los procesos y hacer florecer todo lo que tocas, Estoy profundamente orgulloso de la profesional y la mujer increíble en la que te estás convirtiendo.
+    </p>
+
+    <!-- EDITAR AQUÍ: CONSTELACIÓN 3 (FAMILIA Y PERRITOS) -->
+    <span id="const-tag-3">Constelación III • Tus Raíces</span>
+    <h3 id="const-title-3">La Constelación de tu Familia</h3>
+    <p id="const-text-3">
+      Detrás de tu fuerza y tu nobleza está el hogar que te vio crecer, el orgullo silencioso de papá, el amor incondicional de mamá, la admiración de Eva, Lluvia y Wendy que ven en ti su mejor ejemplo, y la alegría fiel de tus dos perritos. Ellos son tus estrellas guía en la tierra, la raíz que sostiene cada uno de tus sueños.
+    </p>
+
+    <!-- EDITAR AQUÍ: CONSTELACIÓN 4 (TÚ Y YO AGARRADOS DE LA MANO) -->
+    <span id="const-tag-4">Constelación IV • Nuestro Universo</span>
+    <h3 id="const-title-4">Tú y Yo Bajo el Mismo Cielo</h3>
+    <p id="const-text-4">
+      De todas las estrellas que existían la noche en que naciste, mi favorita sigue siendo la que nos unió, Caminar tomado de tu mano celebrando tus triunfos, superando cualquier bache y viéndote cumplir años es el regalo más bonito que me ha dado la vida. Feliz cumpleaños amor, que este nuevo año te regale toda la luz que tú le das a mi mundo.
+    </p>
+
+    <!-- EDITAR AQUÍ: VISTA PANORÁMICA FINAL (TODAS JUNTAS) -->
+    <span id="const-tag-all">Cielo Completo • 25 de Noviembre</span>
+    <h3 id="const-title-all">Feliz Cumpleaños, Mi Vida</h3>
+    <p id="const-text-all">
+      Tus gustos, tu vocación, tu familia y nuestra historia ya brillan juntos en el mismo firmamento. Gracias por existir, por ser tú y por permitirme celebrar otro año a tu lado. te amo infinito + 1 ✨
+    </p>
+  </div>
+
+  <!-- =========================================================
+       VISOR DE CONSTELACIÓN (ZOOM ESPACIAL)
+       ========================================================= -->
+  <div id="constellation-viewer" role="dialog" aria-modal="true">
+    <div class="viewer-top-bar">
+      <span class="viewer-tag" id="viewer-tag">Constelación</span>
+      <button class="viewer-close-x" onclick="closeConstellation()" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div class="constellation-svg-box">
+      <svg id="constellation-svg" viewBox="0 0 360 270" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+
+    <div class="constellation-card">
+      <h3 class="constellation-card-title" id="viewer-title">Título</h3>
+      <p class="constellation-card-text" id="viewer-text">Mensaje</p>
+      <button class="viewer-back-btn" onclick="closeConstellation()">
+        ✦ Volver al cielo estrellado
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL ESTACIÓN 1: PREGUNTA DE SELECCIÓN MÚLTIPLE (GUSTOS)
+       ========================================================= -->
+  <div class="pixel-modal-backdrop" id="modal-station-1">
+    <div class="pixel-window">
+      <div class="pixel-window-bar">
+        <span class="pixel-window-title">ESTACIÓN 1 • TUS GUSTOS</span>
+        <button class="pixel-close-btn" onclick="closeModal('modal-station-1')">✕</button>
+      </div>
+      <div class="pixel-window-body">
+        <div class="quiz-question-card">
+          <div style="font-size:2rem; margin-bottom:6px;">🥑🧶⛪📖</div>
+          <p class="quiz-question-text">
+            ¿Qué te gusta más?
+          </p>
+        </div>
+
+        <div class="quiz-options" id="quiz-options">
+          <button class="quiz-opt-btn" onclick="selectQuizOption(this, false)">
+            <span class="quiz-opt-letter">A</span>
+            <span>Robar</span>
+          </button>
+          <button class="quiz-opt-btn" onclick="selectQuizOption(this, false)">
+            <span class="quiz-opt-letter">B</span>
+            <span>Cerdo</span>
+          </button>
+          <button class="quiz-opt-btn" onclick="selectQuizOption(this, false)">
+            <span class="quiz-opt-letter">C</span>
+            <span>Llorar</span>
+          </button>
+          <button class="quiz-opt-btn" onclick="selectQuizOption(this, true)">
+            <span class="quiz-opt-letter">D</span>
+            <span>El aguacate y el maíz, tejer, hacer postres, escuchar jay wheler, ir a la iglesia, compartir tiempo con la familia, leer y dormir</span>
+          </button>
+        </div>
+
+        <div id="quiz-wrong-msg" class="quiz-feedback-warn" style="display:none;">
+          ❌ ¡Incorrecto! Vuelve a elegir, no seas mentirosa 😄✨
+        </div>
+
+        <div id="quiz-success-area" style="display:none; flex-direction:column; gap:12px;">
+          <div class="romantic-box">
+            <strong>💚 ¡Exacto, me sé cada detalle de ti!</strong><br>
+            Desde disfrutar el aguacate y el maíz, hasta la calma con la que tejes, los postres que preparas, la emocion de oir musica, tu fe al ir a la iglesia, los momentos con tu familia, un buen libro o dormir tranquila... <strong>Cada pequeña cosa te hace ser tú, no vayas a cambiar nunca.</strong>
+          </div>
+          <button class="px-btn px-btn-green" onclick="completeStation(1, 'modal-station-1')">
+            Siguiente nivel ➜
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL ESTACIÓN 2: LLUVIA DE MAZORCAS (15 PUNTOS / 3 VIDAS)
+       ========================================================= -->
+  <div class="pixel-modal-backdrop" id="modal-station-2">
+    <div class="pixel-window">
+      <div class="pixel-window-bar">
+        <span class="pixel-window-title">ESTACIÓN 2 • COSECHA DE MAÍZ</span>
+        <button class="pixel-close-btn" onclick="closeCornGame()">✕</button>
+      </div>
+      <div class="pixel-window-body">
+        <div class="corn-hud">
+          <span>🌽 PUNTOS: <strong id="corn-score">0</strong>/15</span>
+          <span>VIDAS: <strong id="corn-lives">❤️❤️❤️</strong></span>
+        </div>
+
+        <div id="corn-canvas-wrap">
+          <canvas id="corn-canvas"></canvas>
+        </div>
+
+        <p style="font-size:0.82rem; color:var(--slate-600); text-align:center;">
+          Desliza tu dedo sobre el campo (o usa los botones) para mover a Anye y atrapar 15 mazorcas.
+        </p>
+
+        <div class="corn-controls" id="corn-controls">
+          <button class="px-btn px-btn-primary" id="corn-left-btn" type="button">◀ Izquierda</button>
+          <button class="px-btn px-btn-primary" id="corn-right-btn" type="button">Derecha ▶</button>
+        </div>
+
+        <div id="corn-lose-area" style="display:none; flex-direction:column; gap:10px; text-align:center;">
+          <div class="quiz-feedback-warn">
+            💔 ¡Perdiste! Dejaste caer 3 mazorcas y tú amas demasiado el maíz como para desperdiciarlo.
+          </div>
+          <button class="px-btn px-btn-gold" onclick="startCornGame()">
+            🔄 Volver a intentar
+          </button>
+        </div>
+
+        <div id="corn-win-area" style="display:none; flex-direction:column; gap:12px;">
+          <div class="romantic-box">
+            <strong>🌽 ¡Cosecha perfecta (15/15)!</strong><br>
+            Como futura <strong>Ingeniera Agronómica</strong> sabes mejor que nadie que las mejores cosechas nacen de la paciencia, el cuidado y el amor por la tierra, así mismo celebro hoy tu vida y nuestro camino juntos, cada día a tu lado siembra alegría, fortalece lo nuestro y da los frutos más bonitos. ¡Feliz cumpleaños, mi ingeniera favorita!
+          </div>
+          <button class="px-btn px-btn-green" onclick="completeStation(2, 'modal-station-2')">
+            Siguiente nivel ➜
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL ESTACIÓN 3: FAMILIA (EVA, LLUVIA Y WENDY, PERROS, DULEIS, MAMÁ)
+       ========================================================= -->
+  <div class="pixel-modal-backdrop" id="modal-station-3">
+    <div class="pixel-window">
+      <div class="pixel-window-bar">
+        <span class="pixel-window-title">ESTACIÓN 3 • TU FAMILIA</span>
+        <button class="pixel-close-btn" onclick="closeModal('modal-station-3')">✕</button>
+      </div>
+      <div class="pixel-window-body">
+        <p style="font-size:0.86rem; color:var(--slate-700); text-align:center;">
+          Toca a cada integrante de tu familia para escucharlos y darles una mano (<strong id="family-progress-txt">0/5</strong>):
+        </p>
+
+        <div class="family-grid">
+          <button class="family-card" id="fam-card-eva" onclick="selectFamilyMember('eva')">
+            <span class="family-emoji">🎓👧🏻</span>
+            <span class="family-name">Eva</span>
+            <span class="family-status" id="fam-status-eva">Ayudar a Eva</span>
+          </button>
+
+          <button class="family-card" id="fam-card-sisters" onclick="selectFamilyMember('sisters')">
+            <span class="family-emoji">📚👧🏻👧🏻</span>
+            <span class="family-name">Lluvia y Wendy</span>
+            <span class="family-status" id="fam-status-sisters">Ayudar en tareas</span>
+          </button>
+
+          <button class="family-card" id="fam-card-dogs" onclick="selectFamilyMember('dogs')">
+            <span class="family-emoji" id="dogs-emoji">🐶🐶</span>
+            <span class="family-name">Tus 2 Perritos</span>
+            <span class="family-status" id="fam-status-dogs">Alimentar mascotas</span>
+          </button>
+
+          <button class="family-card" id="fam-card-duleis" onclick="selectFamilyMember('duleis')">
+            <span class="family-emoji">🤠🌽</span>
+            <span class="family-name">Papá</span>
+            <span class="family-status" id="fam-status-duleis">Ayudar en la finca</span>
+          </button>
+
+          <button class="family-card full-span" id="fam-card-mama" onclick="selectFamilyMember('mama')">
+            <span class="family-emoji">💐👩🏻</span>
+            <span class="family-name">Mamá</span>
+            <span class="family-status" id="fam-status-mama">Ayudar en casa</span>
+          </button>
+        </div>
+
+        <div class="family-dialogue-panel" id="family-dialogue-panel">
+          <p id="family-dialogue-text" style="font-size:0.92rem; color:var(--slate-700); line-height:1.45; text-align:center;">
+            Selecciona a alguien de arriba para empezar a ayudar.
+          </p>
+          <button class="px-btn px-btn-primary" id="family-action-btn" style="display:none;" onclick="performFamilyHelp()">
+            Ayudar
+          </button>
+        </div>
+
+        <div id="family-complete-area" style="display:none; flex-direction:column; gap:10px;">
+          <div class="romantic-box" style="text-align:center;">
+            <strong>💖 ¡Minijuego completado!</strong><br>
+            Tu corazón siempre tiene espacio para cuidar, guiar y apoyar a quienes amas. ¡Vamos por el último reto!
+          </div>
+          <button class="px-btn px-btn-green" onclick="completeStation(3, 'modal-station-3')">
+            Siguiente nivel ➜
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL ESTACIÓN 4: SERPIENTES Y ESCALERAS (❤️ Y 🌵)
+       ========================================================= -->
+  <div class="pixel-modal-backdrop" id="modal-station-4">
+    <div class="pixel-window">
+      <div class="pixel-window-bar">
+        <span class="pixel-window-title">ESTACIÓN 4 • CAMINO A LA CIMA</span>
+        <button class="pixel-close-btn" onclick="closeModal('modal-station-4')">✕</button>
+      </div>
+      <div class="pixel-window-body">
+        <div class="snakes-legend">
+          <span>❤️ Tú &amp; 🌵 Yo</span>
+          <span>🪜 Impulso • 🌀 Bache</span>
+        </div>
+
+        <div class="board-container" id="board-container">
+          <div class="board-grid" id="snakes-board-grid"></div>
+          <svg id="board-overlay-svg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+          <div class="board-token" id="token-heart" title="Corazoncito">❤️</div>
+          <div class="board-token" id="token-cactus" title="Cactus">🌵</div>
+        </div>
+
+        <div class="romantic-box" id="snakes-message-box" style="font-size:0.89rem; min-height:76px; display:flex; align-items:center; justify-content:center; text-align:center;">
+          Tira el dado para empezar nuestro recorrido juntos hacia la cima (Casilla 25).
+        </div>
+
+        <div class="dice-bar" id="snakes-dice-bar">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="dice-box" id="dice-display">🎲</div>
+            <div style="font-size:0.8rem; color:var(--slate-700);">
+              <div>Turno <strong id="snakes-turn-label">0/6</strong></div>
+              <div id="snakes-pos-label" style="font-weight:600; color:var(--sky-700);">Casilla 1</div>
+            </div>
+          </div>
+          <button class="px-btn px-btn-pink" id="roll-dice-btn" onclick="rollRiggedDice()">
+            Tirar dado
+          </button>
+        </div>
+
+        <div id="snakes-win-area" style="display:none; flex-direction:column; gap:10px;">
+          <button class="px-btn px-btn-green" onclick="completeStation(4, 'modal-station-4')">
+            ¡Completar aventura! 🌟
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       0. GENERADOR DE AVATAR PIXEL ART (CON SOPORTE PARA avatar.png)
+       ============================================================ */
+    function createPixelAvatarSVG() {
+      return `
+        <svg viewBox="0 0 16 16" width="100%" height="100%" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="1" width="8" height="2" fill="#1e1b4b"/>
+          <rect x="3" y="2" width="10" height="7" fill="#1e1b4b"/>
+          <rect x="2" y="4" width="2" height="6" fill="#312e81"/>
+          <rect x="12" y="4" width="2" height="6" fill="#312e81"/>
+          <rect x="4" y="3" width="8" height="6" fill="#fed7aa"/>
+          <rect x="4" y="3" width="3" height="1" fill="#1e1b4b"/>
+          <rect x="9" y="3" width="3" height="1" fill="#1e1b4b"/>
+          <rect x="5" y="5" width="1" height="2" fill="#0f172a"/>
+          <rect x="10" y="5" width="1" height="2" fill="#0f172a"/>
+          <rect x="4" y="7" width="1" height="1" fill="#f472b6"/>
+          <rect x="11" y="7" width="1" height="1" fill="#f472b6"/>
+          <rect x="7" y="7" width="2" height="1" fill="#be185d"/>
+          <rect x="4" y="9" width="8" height="4" fill="#38bdf8"/>
+          <rect x="6" y="10" width="4" height="2" fill="#f472b6"/>
+          <rect x="3" y="9" width="1" height="3" fill="#fed7aa"/>
+          <rect x="12" y="9" width="1" height="3" fill="#fed7aa"/>
+          <rect x="5" y="13" width="2" height="2" fill="#1e3a8a"/>
+          <rect x="9" y="13" width="2" height="2" fill="#1e3a8a"/>
+          <rect x="4" y="15" width="3" height="1" fill="#ec4899"/>
+          <rect x="9" y="15" width="3" height="1" fill="#ec4899"/>
+        </svg>`;
+    }
+
+    let customAvatarImg = null;
+    (function loadCustomAvatarIfPresent() {
+      const testImg = new Image();
+      testImg.onload = () => {
+        customAvatarImg = testImg;
+        const spriteHolder = document.getElementById('minimap-avatar-sprite');
+        if (spriteHolder) {
+          spriteHolder.innerHTML = `<img src="avatar.png" alt="Anye" style="width:100%; height:100%; object-fit:contain; image-rendering:pixelated;" />`;
+        }
+      };
+      testImg.onerror = () => {
+        document.getElementById('minimap-avatar-sprite').innerHTML = createPixelAvatarSVG();
+      };
+      testImg.src = 'avatar.png';
+    })();
+
+    /* ============================================================
+       1. FALLBACK VISUAL ACTO 1 (imagen1.jpg ... imagen4.jpg)
+       ============================================================ */
+    function handleMissingImage(imgElement, fileName) {
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#e0f2fe"/>
+              <stop offset="50%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#fce7f3"/>
+            </linearGradient>
+          </defs>
+          <rect width="960" height="540" fill="url(#g)"/>
+          <rect x="36" y="36" width="888" height="468" rx="28" fill="none" stroke="#7dd3fc" stroke-width="3" stroke-dasharray="12 10"/>
+          <text x="480" y="260" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="600" fill="#0369a1">${fileName}</text>
+          <text x="480" y="305" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#ec4899">Coloca tu collage aquí</text>
+        </svg>`;
+      imgElement.onerror = null;
+      imgElement.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+    }
+
+    /* ============================================================
+       2. MOTOR DE GIRASOLES CAYENDO (SUAVE Y SOLO EN ACTO 1)
+       ============================================================ */
+    const canvas = document.getElementById('sunflower-canvas');
+    const ctx = canvas.getContext('2d');
+    let sunflowers = [];
+    let animationFrameId = null;
+
+    let _act1T = -1000, _act1V = true;
+    function isActo1ActiveOnScreen() {
+      const t = performance.now();
+      if (t - _act1T > 150) {
+        _act1T = t;
+        _act1V = document.getElementById('acto-1-wrapped').getBoundingClientRect().bottom > window.innerHeight * 0.45;
+      }
+      return _act1V;
+    }
+
+    function clearSunflowers() {
+      sunflowers = [];
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!isActo1ActiveOnScreen() && sunflowers.length > 0) {
+        clearSunflowers();
+      }
+    }, { passive: true });
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function drawSunflowerRaw(ctx, x, y, radius, rotation, alpha) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rotation);
+      ctx.globalAlpha = alpha;
+
+      const petalCount = 14;
+      for (let i = 0; i < petalCount; i++) {
+        ctx.save();
+        ctx.rotate((i * Math.PI * 2) / petalCount);
+        ctx.beginPath();
+        ctx.ellipse(0, -radius * 0.72, radius * 0.22, radius * 0.52, 0, 0, Math.PI * 2);
+        ctx.fillStyle = i % 2 === 0 ? '#facc15' : '#eab308';
+        ctx.fill();
+        ctx.restore();
+      }
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.42, 0, Math.PI * 2);
+      ctx.fillStyle = '#451a03';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.28, 0, Math.PI * 2);
+      ctx.fillStyle = '#78350f';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    const sunSprite = (() => {
+      const c = document.createElement('canvas');
+      c.width = c.height = 128;
+      drawSunflowerRaw(c.getContext('2d'), 64, 64, 48, 0, 1);
+      return c;
+    })();
+    function drawSunflower(ctx, x, y, radius, rotation, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y);
+      ctx.rotate(rotation);
+      const k = radius / 48;
+      ctx.scale(k, k);
+      ctx.drawImage(sunSprite, -64, -64);
+      ctx.restore();
+    }
+
+    function spawnSunflowerShower(count = 8) {
+      // Solo se ejecuta mientras el usuario está en el Acto 1
+      if (!isActo1ActiveOnScreen()) return;
+
+      const w = window.innerWidth;
+      for (let i = 0; i < count; i++) {
+        sunflowers.push({
+          x: Math.random() * w,
+          y: -25 - Math.random() * 190,
+          radius: 11 + Math.random() * 8,
+          vy: 1.05 + Math.random() * 1.15,
+          swaySpeed: 0.015 + Math.random() * 0.018,
+          swayAmp: 0.65 + Math.random() * 1.0,
+          phase: Math.random() * Math.PI * 2,
+          rotation: Math.random() * Math.PI * 2,
+          vRot: (Math.random() - 0.5) * 0.03,
+          alpha: 0.92
+        });
+      }
+      if (!animationFrameId) {
+        renderSunflowers();
+      }
+    }
+
+    function renderSunflowers() {
+      if (!isActo1ActiveOnScreen()) {
+        clearSunflowers();
+        return;
+      }
+
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = sunflowers.length - 1; i >= 0; i--) {
+        const p = sunflowers[i];
+        p.phase += p.swaySpeed;
+        p.x += Math.sin(p.phase) * p.swayAmp;
+        p.y += p.vy;
+        p.rotation += p.vRot;
+
+        if (p.y > h - 90) {
+          p.alpha = Math.max(0, (h - p.y) / 90);
+        }
+
+        drawSunflower(ctx, p.x, p.y, p.radius, p.rotation, p.alpha);
+
+        if (p.y - p.radius > h || p.alpha <= 0.01) {
+          sunflowers.splice(i, 1);
+        }
+      }
+
+      if (sunflowers.length > 0) {
+        animationFrameId = requestAnimationFrame(renderSunflowers);
+      } else {
+        animationFrameId = null;
+      }
+    }
+
+    /* ============================================================
+       3. LÓGICA DE HISTORIAS ACTO 1 (TIPO SPOTIFY)
+       ============================================================ */
+    const totalSlides = 5;
+    let currentSlide = 0;
+    let progress = 0;
+    let isPaused = false;
+    const SLIDE_DURATION = 7500;
+    let lastTimestamp = performance.now();
+
+    const track = document.getElementById('stories-track');
+    const slides = document.querySelectorAll('.story-slide');
+    const bars = document.querySelectorAll('.progress-fill');
+    const orbSky = document.getElementById('orb-sky');
+    const orbPink = document.getElementById('orb-pink');
+    const viewport = document.getElementById('stories-viewport');
+    const btnScrollDown = document.getElementById('btn-scroll-down');
+
+    function updateAmbientOrbs(index) {
+      const shifts = [
+        { sky: 'translate(0px, 0px)', pink: 'translate(0px, 0px)' },
+        { sky: 'translate(60px, 40px)', pink: 'translate(-50px, -30px)' },
+        { sky: 'translate(120px, 10px)', pink: 'translate(-90px, -60px)' },
+        { sky: 'translate(40px, 80px)', pink: 'translate(-40px, -90px)' },
+        { sky: 'translate(80px, 50px)', pink: 'translate(-70px, -50px)' }
+      ];
+      orbSky.style.transform = shifts[index].sky;
+      orbPink.style.transform = shifts[index].pink;
+    }
+
+    function goToSlide(index, triggerFlowers = true) {
+      if (index < 0) index = 0;
+      if (index >= totalSlides) index = totalSlides - 1;
+
+      const changed = index !== currentSlide;
+      currentSlide = index;
+      progress = 0;
+
+      track.style.transform = `translateX(-${currentSlide * 20}%)`;
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentSlide);
+      });
+
+      bars.forEach((bar, i) => {
+        if (i < currentSlide) bar.style.transform = 'scaleX(1)';
+        else bar.style.transform = 'scaleX(0)';
+      });
+
+      updateAmbientOrbs(currentSlide);
+
+      if (currentSlide === totalSlides - 1) {
+        document.body.classList.remove('lock-scroll');
+      } else {
+        document.body.classList.add('lock-scroll');
+      }
+
+      if (changed && triggerFlowers) {
+        spawnSunflowerShower(8);
+      }
+    }
+
+    function tickProgress(now) {
+      const dt = now - lastTimestamp;
+      lastTimestamp = now;
+
+      if (!isPaused && currentSlide < totalSlides - 1) {
+        progress += (dt / SLIDE_DURATION) * 100;
+        if (progress >= 100) {
+          goToSlide(currentSlide + 1, true);
+        } else {
+          bars[currentSlide].style.transform = `scaleX(${progress / 100})`;
+        }
+      } else if (currentSlide === totalSlides - 1) {
+        bars[currentSlide].style.transform = 'scaleX(1)';
+      }
+
+      requestAnimationFrame(tickProgress);
+    }
+
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+    let pointerDownTime = 0;
+
+    viewport.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('#btn-scroll-down')) return;
+      pointerStartX = e.clientX;
+      pointerStartY = e.clientY;
+      pointerDownTime = performance.now();
+      isPaused = true;
+    });
+
+    viewport.addEventListener('pointerup', (e) => {
+      isPaused = false;
+      if (e.target.closest('#btn-scroll-down')) return;
+
+      const dx = e.clientX - pointerStartX;
+      const dy = e.clientY - pointerStartY;
+      const elapsed = performance.now() - pointerDownTime;
+
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0 && currentSlide < totalSlides - 1) {
+          goToSlide(currentSlide + 1, true);
+        } else if (dx > 0 && currentSlide > 0) {
+          goToSlide(currentSlide - 1, true);
+        }
+        return;
+      }
+
+      if (currentSlide === totalSlides - 1 && dy < -50) {
+        scrollToActo2();
+        return;
+      }
+
+      if (Math.abs(dx) < 12 && Math.abs(dy) < 12 && elapsed < 260) {
+        const halfWidth = window.innerWidth * 0.35;
+        if (e.clientX < halfWidth) {
+          goToSlide(currentSlide - 1, true);
+        } else if (currentSlide < totalSlides - 1) {
+          goToSlide(currentSlide + 1, true);
+        }
+      }
+    });
+
+    viewport.addEventListener('pointercancel', () => {
+      isPaused = false;
+    });
+
+    function scrollToActo2() {
+      clearSunflowers();
+      document.body.classList.remove('lock-scroll');
+      document.getElementById('acto-2-minijuego').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    btnScrollDown.addEventListener('click', scrollToActo2);
+
+    /* ============================================================
+       4. CONTROL DEL MINIMAPA DE 4 ESTACIONES (ACTO 2)
+       ============================================================ */
+    const stationCoords = {
+      1: { left: '24%', top: '84%' },
+      2: { left: '75%', top: '64%' },
+      3: { left: '25%', top: '38%' },
+      4: { left: '74%', top: '16%' }
+    };
+
+    const stationState = {
+      1: 'unlocked',
+      2: 'locked',
+      3: 'locked',
+      4: 'locked'
+    };
+
+    function moveMinimapAvatar(stationId) {
+      const av = document.getElementById('minimap-avatar');
+      const pos = stationCoords[stationId];
+      av.classList.add('walking');
+      av.style.left = pos.left;
+      av.style.top = pos.top;
+      setTimeout(() => av.classList.remove('walking'), 850);
+    }
+
+    function openModal(id) {
+      document.body.classList.add('modal-open');
+      document.getElementById(id).classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.body.classList.remove('modal-open');
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function openStation(num) {
+      if (stationState[num] === 'locked') {
+        const node = document.getElementById(`node-${num}`);
+        node.style.transform = 'translate(-50%, -50%) scale(0.92)';
+        setTimeout(() => node.style.transform = 'translate(-50%, -50%)', 160);
+        return;
+      }
+
+      moveMinimapAvatar(num);
+
+      if (num === 1) {
+        openModal('modal-station-1');
+      } else if (num === 2) {
+        openModal('modal-station-2');
+        startCornGame();
+      } else if (num === 3) {
+        openModal('modal-station-3');
+      } else if (num === 4) {
+        openModal('modal-station-4');
+        initSnakesBoard();
+      }
+    }
+
+    function completeStation(num, modalId) {
+      closeModal(modalId);
+      stationState[num] = 'completed';
+
+      const currentNode = document.getElementById(`node-${num}`);
+      currentNode.classList.remove('unlocked');
+      currentNode.classList.add('completed');
+
+      const dot = document.getElementById(`hud-dot-${num}`);
+      dot.classList.remove('active');
+      dot.classList.add('done');
+
+      const completedCount = Object.values(stationState).filter(s => s === 'completed').length;
+      document.getElementById('hud-count').textContent = `${completedCount}/4`;
+
+      if (num < 4 && stationState[num + 1] === 'locked') {
+        stationState[num + 1] = 'unlocked';
+        const nextNode = document.getElementById(`node-${num + 1}`);
+        nextNode.classList.remove('locked');
+        nextNode.classList.add('unlocked');
+        document.getElementById(`hud-dot-${num + 1}`).classList.add('active');
+        setTimeout(() => moveMinimapAvatar(num + 1), 300);
+      }
+
+      if (completedCount === 4) {
+        document.getElementById('acto2-complete-card').classList.add('visible');
+        setTimeout(() => {
+          document.getElementById('acto2-complete-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 400);
+      }
+    }
+
+    /* ============================================================
+       5. ESTACIÓN 1: QUIZ TUS GUSTOS
+       ============================================================ */
+    let quizSolved = false;
+
+    function selectQuizOption(btn, isCorrect) {
+      if (quizSolved) return;
+
+      const warnBox = document.getElementById('quiz-wrong-msg');
+      const successArea = document.getElementById('quiz-success-area');
+
+      if (!isCorrect) {
+        btn.classList.remove('wrong');
+        void btn.offsetWidth;
+        btn.classList.add('wrong');
+        warnBox.style.display = 'block';
+      } else {
+        quizSolved = true;
+        warnBox.style.display = 'none';
+        btn.classList.add('correct');
+        successArea.style.display = 'flex';
+      }
+    }
+
+    /* ============================================================
+       6. ESTACIÓN 2: MINIJUEGO DE ATRAPAR MAZORCAS
+       ============================================================ */
+    const cornCanvas = document.getElementById('corn-canvas');
+    const cornCtx = cornCanvas.getContext('2d');
+    let cornAnimId = null;
+    let cornGameActive = false;
+    let cornScore = 0;
+    let cornLives = 3;
+    let corns = [];
+    let spawnTimer = 0;
+    let playerX = 0.5;
+    let moveDir = 0;
+
+    function resizeCornCanvas() {
+      const wrap = document.getElementById('corn-canvas-wrap');
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cornCanvas.width = wrap.clientWidth * dpr;
+      cornCanvas.height = wrap.clientHeight * dpr;
+      cornCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function updateCornHUD() {
+      document.getElementById('corn-score').textContent = cornScore;
+      document.getElementById('corn-lives').textContent = '❤️'.repeat(Math.max(0, cornLives)) + '🖤'.repeat(Math.max(0, 3 - cornLives));
+    }
+
+    function startCornGame() {
+      resizeCornCanvas();
+      cornScore = 0;
+      cornLives = 3;
+      corns = [];
+      spawnTimer = 0;
+      playerX = 0.5;
+      moveDir = 0;
+      cornGameActive = true;
+
+      document.getElementById('corn-lose-area').style.display = 'none';
+      document.getElementById('corn-win-area').style.display = 'none';
+      document.getElementById('corn-controls').style.display = 'grid';
+      updateCornHUD();
+
+      if (cornAnimId) cancelAnimationFrame(cornAnimId);
+      let prev = performance.now();
+
+      function loop(now) {
+        if (!cornGameActive) return;
+        const dt = Math.min((now - prev) / 1000, 0.05);
+        prev = now;
+        updateCornGame(dt);
+        drawCornGame();
+        cornAnimId = requestAnimationFrame(loop);
+      }
+      cornAnimId = requestAnimationFrame(loop);
+    }
+
+    function closeCornGame() {
+      cornGameActive = false;
+      if (cornAnimId) cancelAnimationFrame(cornAnimId);
+      closeModal('modal-station-2');
+    }
+
+    function drawPixelCorn(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.fillStyle = '#16a34a';
+      ctx.fillRect(-11, -4, 4, 16);
+      ctx.fillRect(7, -4, 4, 16);
+      ctx.fillStyle = '#22c55e';
+      ctx.fillRect(-9, 6, 18, 8);
+      ctx.fillStyle = '#facc15';
+      ctx.fillRect(-7, -14, 14, 22);
+      ctx.fillStyle = '#eab308';
+      ctx.fillRect(-4, -12, 3, 4);
+      ctx.fillRect(1, -8, 3, 4);
+      ctx.fillRect(-4, -3, 3, 4);
+      ctx.fillRect(1, 1, 3, 4);
+      ctx.restore();
+    }
+
+    function drawPixelAnyeOnCanvas(ctx, x, y) {
+      ctx.save();
+      ctx.translate(x - 22, y - 44);
+      if (customAvatarImg) {
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(customAvatarImg, 0, 0, 44, 44);
+      } else {
+        const s = 2.75;
+        const px = (gx, gy, gw, gh, color) => {
+          ctx.fillStyle = color;
+          ctx.fillRect(gx * s, gy * s, gw * s, gh * s);
+        };
+        px(4, 1, 8, 2, '#1e1b4b');
+        px(3, 2, 10, 7, '#1e1b4b');
+        px(2, 4, 2, 6, '#312e81');
+        px(12, 4, 2, 6, '#312e81');
+        px(4, 3, 8, 6, '#fed7aa');
+        px(5, 5, 1, 2, '#0f172a');
+        px(10, 5, 1, 2, '#0f172a');
+        px(4, 7, 1, 1, '#f472b6');
+        px(11, 7, 1, 1, '#f472b6');
+        px(4, 9, 8, 4, '#38bdf8');
+        px(6, 10, 4, 2, '#f472b6');
+        px(5, 13, 2, 2, '#1e3a8a');
+        px(9, 13, 2, 2, '#1e3a8a');
+      }
+      ctx.restore();
+    }
+
+    function updateCornGame(dt) {
+      const wrap = document.getElementById('corn-canvas-wrap');
+      const w = wrap.clientWidth;
+      const h = wrap.clientHeight;
+
+      if (moveDir !== 0) {
+        playerX = Math.max(0.08, Math.min(0.92, playerX + moveDir * 0.95 * dt));
+      }
+
+      spawnTimer += dt;
+      const spawnInterval = Math.max(0.62, 0.98 - cornScore * 0.018);
+      if (spawnTimer >= spawnInterval) {
+        spawnTimer = 0;
+        corns.push({
+          x: 28 + Math.random() * (w - 56),
+          y: -18,
+          vy: 155 + cornScore * 4.5 + Math.random() * 25
+        });
+      }
+
+      const px = playerX * w;
+      const py = h - 22;
+
+      for (let i = corns.length - 1; i >= 0; i--) {
+        const c = corns[i];
+        c.y += c.vy * dt;
+
+        if (Math.abs(c.x - px) < 30 && Math.abs(c.y - (py - 22)) < 26) {
+          corns.splice(i, 1);
+          cornScore++;
+          updateCornHUD();
+
+          if (cornScore >= 15) {
+            cornGameActive = false;
+            document.getElementById('corn-controls').style.display = 'none';
+            document.getElementById('corn-win-area').style.display = 'flex';
+            return;
+          }
+          continue;
+        }
+
+        if (c.y > h - 8) {
+          corns.splice(i, 1);
+          cornLives--;
+          updateCornHUD();
+
+          if (cornLives <= 0) {
+            cornGameActive = false;
+            document.getElementById('corn-controls').style.display = 'none';
+            document.getElementById('corn-lose-area').style.display = 'flex';
+            return;
+          }
+        }
+      }
+    }
+
+    function drawCornGame() {
+      const wrap = document.getElementById('corn-canvas-wrap');
+      const w = wrap.clientWidth;
+      const h = wrap.clientHeight;
+      cornCtx.clearRect(0, 0, w, h);
+
+      cornCtx.fillStyle = '#fde047';
+      cornCtx.fillRect(w - 56, 18, 34, 34);
+
+      cornCtx.fillStyle = 'rgba(255,255,255,0.85)';
+      cornCtx.fillRect(28, 32, 54, 14);
+      cornCtx.fillRect(40, 22, 30, 12);
+
+      for (const c of corns) {
+        drawPixelCorn(cornCtx, c.x, c.y);
+      }
+
+      drawPixelAnyeOnCanvas(cornCtx, playerX * w, h - 10);
+    }
+
+    const cornWrap = document.getElementById('corn-canvas-wrap');
+    cornWrap.addEventListener('pointermove', (e) => {
+      if (!cornGameActive) return;
+      const rect = cornWrap.getBoundingClientRect();
+      const rel = (e.clientX - rect.left) / rect.width;
+      playerX = Math.max(0.08, Math.min(0.92, rel));
+    });
+    cornWrap.addEventListener('pointerdown', (e) => {
+      if (!cornGameActive) return;
+      const rect = cornWrap.getBoundingClientRect();
+      const rel = (e.clientX - rect.left) / rect.width;
+      playerX = Math.max(0.08, Math.min(0.92, rel));
+    });
+
+    const leftBtn = document.getElementById('corn-left-btn');
+    const rightBtn = document.getElementById('corn-right-btn');
+    leftBtn.addEventListener('pointerdown', () => moveDir = -1);
+    leftBtn.addEventListener('pointerup', () => moveDir = 0);
+    leftBtn.addEventListener('pointerleave', () => moveDir = 0);
+    rightBtn.addEventListener('pointerdown', () => moveDir = 1);
+    rightBtn.addEventListener('pointerup', () => moveDir = 0);
+    rightBtn.addEventListener('pointerleave', () => moveDir = 0);
+
+    /* ============================================================
+       7. ESTACIÓN 3: FAMILIA (5 TAREAS INTERACTIVAS)
+       ============================================================ */
+    const familyData = {
+      eva: {
+        prompt: '👧🏻 <strong>Eva dice:</strong> «Anye, ayúdame a inscribirme a la universidad.»',
+        btnText: '🎓 Ayudar a inscribir',
+        doneStatus: '¡Inscrita! ✓',
+        thanks: '💖 <strong>Eva:</strong> «Muchas gracias hermanita por ayudarme a inscribirme a la universidad, no podría haberlo hecho sin ti, eres mi guía y mi ejemplo a seguir.»',
+        helped: false
+      },
+      sisters: {
+        prompt: '👧🏻👧🏻 <strong>Lluvia y Wendy dicen:</strong> «Anye, ayúdanos a hacer la tarea.»',
+        btnText: '📚 Ayudar a Wendy y Lluvia',
+        doneStatus: '¡Tareas listas! ✓',
+        thanks: '💖 <strong>Lluvia y Wendy:</strong> «¡Gracias hermanita por ayudarnos a hacer las tareas! Eres en quien más podemos confiar y siempre estás ahí cuando nos haces falta.»',
+        helped: false
+      },
+      dogs: {
+        prompt: '🐶🐶 <strong>Tus dos perritos:</strong> «¡Guau, guau! (Te miran moviendo las orejitas esperando su comida)»',
+        btnText: '🦴 Alimentar mascotas',
+        doneStatus: '¡Felices! ✓',
+        thanks: '🐾 <strong>¡Guau, guau!</strong> Tus dos perritos dieron un brinco de alegría y no paran de mover la colita agradecidos contigo.',
+        helped: false
+      },
+      duleis: {
+        prompt: '🤠 <strong>Papá dice:</strong> «Hija, vamos a recoger maíz en a la playa.»',
+        btnText: '🌽 Ayudar a recoger maíz',
+        doneStatus: '¡Maíz recogido! ✓',
+        thanks: '🌾 <strong>¡Ayudaste a tu papá a recoger maíz!</strong><br><strong>Duleis:</strong> «Gracias, hija, eres mi orgullo, tengo plena confianza en ti y en todo lo que eres capaz de lograr.»',
+        helped: false
+      },
+      mama: {
+        prompt: '👩🏻 <strong>Mamá dice:</strong> «Anye, ayúdame en cosas de la casa.»',
+        btnText: '🏡 Ayudar a mamá',
+        doneStatus: '¡Ayudada! ✓',
+        thanks: '💐 <strong>Mamá:</strong> «Gracias, hija. Sé que pasamos peleando, pero quiero que sepas que eres de las personas que más quiero en mi vida.»',
+        helped: false
+      }
+    };
+
+    let currentFamilyKey = null;
+
+    function selectFamilyMember(key) {
+      currentFamilyKey = key;
+      Object.keys(familyData).forEach(k => {
+        document.getElementById(`fam-card-${k}`).classList.toggle('selected', k === key);
+      });
+
+      const item = familyData[key];
+      const textEl = document.getElementById('family-dialogue-text');
+      const btnEl = document.getElementById('family-action-btn');
+
+      if (item.helped) {
+        textEl.innerHTML = item.thanks;
+        btnEl.style.display = 'none';
+      } else {
+        textEl.innerHTML = item.prompt;
+        btnEl.textContent = item.btnText;
+        btnEl.style.display = 'inline-flex';
+      }
+    }
+
+    function performFamilyHelp() {
+      if (!currentFamilyKey) return;
+      const item = familyData[currentFamilyKey];
+      item.helped = true;
+
+      const card = document.getElementById(`fam-card-${currentFamilyKey}`);
+      card.classList.add('helped');
+      document.getElementById(`fam-status-${currentFamilyKey}`).textContent = item.doneStatus;
+
+      if (currentFamilyKey === 'dogs') {
+        card.classList.add('dogs-happy');
+      }
+
+      document.getElementById('family-dialogue-text').innerHTML = item.thanks;
+      document.getElementById('family-action-btn').style.display = 'none';
+
+      const helpedCount = Object.values(familyData).filter(f => f.helped).length;
+      document.getElementById('family-progress-txt').textContent = `${helpedCount}/5`;
+
+      if (helpedCount === 5) {
+        document.getElementById('family-complete-area').style.display = 'flex';
+      }
+    }
+
+    /* ============================================================
+       8. ESTACIÓN 4: SERPIENTES Y ESCALERAS TRUCADO (❤️ Y 🌵)
+       ============================================================ */
+    const visualRows = [
+      [21, 22, 23, 24, 25],
+      [20, 19, 18, 17, 16],
+      [11, 12, 13, 14, 15],
+      [10,  9,  8,  7,  6],
+      [ 1,  2,  3,  4,  5]
+    ];
+
+    function getCellPercentCoords(cellNum) {
+      for (let r = 0; r < 5; r++) {
+        const c = visualRows[r].indexOf(cellNum);
+        if (c !== -1) {
+          return { x: (c + 0.5) * 20, y: (r + 0.5) * 20 };
+        }
+      }
+      return { x: 10, y: 90 };
+    }
+
+    let snakesInitialized = false;
+    let snakesTurn = 0;
+    let isAnimatingTokens = false;
+
+    const riggedTurns = [
+      {
+        dice: 4,
+        heartTo: 10,
+        cactusTo: 10,
+        posText: 'Casilla 10 (¡Escalera!)',
+        msg: '🎲 ¡Sacaste 4! Caímos en la casilla 5 y subimos juntos por la escalera hasta la <strong>Casilla 10</strong>: cuando hablamos sin mirar el reloj, avanzamos el doble de rápido.'
+      },
+      {
+        dice: 5,
+        heartTo: 15,
+        cactusTo: 15,
+        posText: 'Casilla 15',
+        msg: '🎲 ¡Sacaste 5! Avanzamos lado a lado hasta la <strong>Casilla 15</strong>: entre risas, detalles y complicidad, caminar contigo hace ligero cualquier día.'
+      },
+      {
+        dice: 3,
+        heartTo: 13,
+        cactusTo: 16,
+        posText: '❤️ Casilla 13 • 🌵 Casilla 16',
+        msg: '🎲 ¡Sacaste 3! ❤️ pisó un bache en la 18 y retrocedió a la <strong>13</strong>... pero 🌵 se detuvo en la 16 y te dijo: <em>«Aquí te espero, porque aunque retrocedamos y tengamos nuestros conflictos, nos volvemos a levantar y llegamos juntos a la cima.»</em>'
+      },
+      {
+        dice: 5,
+        heartTo: 18,
+        cactusTo: 18,
+        posText: 'Casilla 18 (¡Reunidos!)',
+        msg: '🎲 ¡Sacaste 5! ❤️ superó el bache y se reunió con 🌵 en la <strong>Casilla 18</strong>: ningún tropiezo es más fuerte que nuestras ganas de seguir eligiéndonos.'
+      },
+      {
+        dice: 4,
+        heartTo: 22,
+        cactusTo: 22,
+        posText: 'Casilla 22',
+        msg: '🎲 ¡Sacaste 4! Ya estamos en la <strong>Casilla 22</strong>, a un paso de la cima, celebrando todo lo que eres y todo lo que construimos juntos.'
+      },
+      {
+        dice: 3,
+        heartTo: 25,
+        cactusTo: 25,
+        posText: 'Casilla 25 (¡LA CIMA!)',
+        msg: '👑 <strong>¡Sacaste 3 y llegamos juntos a la cima (Casilla 25)!</strong> No importa cuántas vueltas dé el camino, mi lugar favorito siempre será llegar contigo hasta el final. ¡Feliz cumpleaños, amor!'
+      }
+    ];
+
+    function initSnakesBoard() {
+      if (snakesInitialized) return;
+      snakesInitialized = true;
+
+      const grid = document.getElementById('snakes-board-grid');
+      grid.innerHTML = '';
+
+      visualRows.forEach(row => {
+        row.forEach(num => {
+          const cell = document.createElement('div');
+          cell.className = `board-cell ${num % 2 === 0 ? 'even' : 'odd'}`;
+          let icon = '';
+          if (num === 5) { cell.classList.add('ladder-start'); icon = '🪜'; }
+          if (num === 18) { cell.classList.add('slide-start'); icon = '🌀'; }
+          if (num === 25) { cell.classList.add('goal-cell'); icon = '👑'; }
+          if (num === 1) { icon = '🏁'; }
+          cell.dataset.n = num;
+          cell.innerHTML = `<span>${num}</span><span class="cell-icon">${icon}</span>`;
+          grid.appendChild(cell);
+        });
+      });
+
+      drawBoardArt();
+      positionTokens(1, 1);
+    }
+
+    function positionTokens(heartCell, cactusCell) {
+      const hPos = getCellPercentCoords(heartCell);
+      const cPos = getCellPercentCoords(cactusCell);
+
+      const heartEl = document.getElementById('token-heart');
+      const cactusEl = document.getElementById('token-cactus');
+
+      heartEl.style.left = `${hPos.x - 3.2}%`;
+      heartEl.style.top = `${hPos.y}%`;
+
+      cactusEl.style.left = `${cPos.x + 3.2}%`;
+      cactusEl.style.top = `${cPos.y}%`;
+      document.querySelectorAll('.board-cell').forEach(c => c.classList.toggle('on', +c.dataset.n === heartCell || +c.dataset.n === cactusCell));
+    }
+
+    function drawBoardArt() {
+      const svg = document.getElementById('board-overlay-svg'), ns = 'http://www.w3.org/2000/svg';
+      svg.innerHTML = '';
+      const mk = (t, a) => { const e = document.createElementNS(ns, t); for (const k in a) e.setAttribute(k, a[k]); svg.appendChild(e); return e; };
+      const pts = [];
+      for (let n = 1; n <= 25; n++) { const c = getCellPercentCoords(n); pts.push(c.x + ',' + c.y); }
+      mk('polyline', { points: pts.join(' '), fill: 'none', stroke: 'rgba(255,255,255,.6)', 'stroke-width': 1.2, 'stroke-dasharray': '0.1 2.3', 'stroke-linecap': 'round' });
+      // Escalera de madera (casilla 5 -> 10)
+      const A = getCellPercentCoords(5), B = getCellPercentCoords(10);
+      const L = Math.hypot(B.x - A.x, B.y - A.y), u = { x: (B.x - A.x) / L, y: (B.y - A.y) / L };
+      const nx = -u.y * 2.6, ny = u.x * 2.6;
+      [[1, 1.4, 1], [0, 0, 0]].forEach(([dx, dy, sh]) => {
+        for (let t = 4; t < L - 2; t += 6.5) {
+          const px = A.x + u.x * t + dx, py = A.y + u.y * t + dy;
+          mk('line', { x1: px - nx, y1: py - ny, x2: px + nx, y2: py + ny, stroke: sh ? 'rgba(0,0,0,.3)' : '#b97a3e', 'stroke-width': 1.2, 'stroke-linecap': 'round' });
+        }
+        [-1, 1].forEach(sd => {
+          const l = { x1: A.x + sd * nx + dx, y1: A.y + sd * ny + dy, x2: B.x + sd * nx + dx, y2: B.y + sd * ny + dy, 'stroke-linecap': 'round' };
+          mk('line', { ...l, stroke: sh ? 'rgba(0,0,0,.3)' : '#7c4a1e', 'stroke-width': 1.8 });
+          if (!sh) mk('line', { ...l, stroke: '#d9a066', 'stroke-width': 0.5 });
+        });
+      });
+      // Bache / serpiente (casilla 18 -> 13)
+      const d = 'M 50 29 C 84 28 84 43 56 42 C 30 41 26 49 50 52';
+      mk('path', { d, transform: 'translate(1,1.4)', fill: 'none', stroke: 'rgba(0,0,0,.3)', 'stroke-width': 4.6, 'stroke-linecap': 'round' });
+      mk('path', { d, fill: 'none', stroke: '#dc2626', 'stroke-width': 4.4, 'stroke-linecap': 'round' });
+      mk('path', { d, fill: 'none', stroke: '#fde68a', 'stroke-width': 1.4, 'stroke-linecap': 'round', 'stroke-dasharray': '1.2 2.6' });
+      mk('path', { d: 'M 50 24 L 50 21.5 M 50 21.5 L 48.6 20 M 50 21.5 L 51.4 20', fill: 'none', stroke: '#be123c', 'stroke-width': 0.6, 'stroke-linecap': 'round' });
+      mk('ellipse', { cx: 50, cy: 28.6, rx: 3.8, ry: 3.4, fill: '#dc2626', stroke: '#991b1b', 'stroke-width': 0.5 });
+      [-1.6, 1.6].forEach(o => { mk('circle', { cx: 50 + o, cy: 27.6, r: 1.1, fill: '#fff' }); mk('circle', { cx: 50 + o, cy: 27.5, r: 0.55, fill: '#111' }); });
+    }
+
+    function rollRiggedDice() {
+      if (isAnimatingTokens || snakesTurn >= riggedTurns.length) return;
+      isAnimatingTokens = true;
+
+      const step = riggedTurns[snakesTurn];
+      const diceEl = document.getElementById('dice-display');
+      const rollBtn = document.getElementById('roll-dice-btn');
+      rollBtn.disabled = true;
+
+      diceEl.classList.remove('rolling');
+      void diceEl.offsetWidth;
+      diceEl.classList.add('rolling');
+      diceEl.textContent = step.dice;
+
+      snakesTurn++;
+      document.getElementById('snakes-turn-label').textContent = `${snakesTurn}/6`;
+      document.getElementById('snakes-pos-label').textContent = step.posText;
+      document.getElementById('snakes-message-box').innerHTML = step.msg;
+
+      positionTokens(step.heartTo, step.cactusTo);
+
+      setTimeout(() => {
+        isAnimatingTokens = false;
+        rollBtn.disabled = false;
+
+        if (snakesTurn === riggedTurns.length) {
+          document.getElementById('snakes-dice-bar').style.display = 'none';
+          document.getElementById('snakes-win-area').style.display = 'flex';
+        }
+      }, 550);
+    }
+
+    /* ============================================================
+       9. ACTO 3: CIELO NOCTURNO REALISTA (25 DE NOVIEMBRE) + ZOOM
+       ============================================================ */
+    const skyCanvas = document.getElementById('night-sky-canvas');
+    const skyCtx = skyCanvas.getContext('2d');
+    let skyAnimId = null;
+    let bgStars = [];
+    let shootingStars = [];
+    let warpActive = false;
+    let warpCenter = { x: 0.5, y: 0.5 };
+    let warpSpeed = 0;
+
+    const realNov25Sky = [
+      {
+        name: 'Orión',
+        stars: [
+          { x: 0.14, y: 0.44, label: 'Betelgeuse' },
+          { x: 0.22, y: 0.45 },
+          { x: 0.17, y: 0.49 },
+          { x: 0.18, y: 0.49 },
+          { x: 0.19, y: 0.49 },
+          { x: 0.14, y: 0.55 },
+          { x: 0.22, y: 0.55, label: 'Rigel' }
+        ],
+        links: [[0,1],[0,2],[1,4],[2,3],[3,4],[2,5],[4,6],[5,6]]
+      },
+      {
+        name: 'Galaxia de Andrómeda (M31)',
+        isGalaxy: true,
+        stars: [{ x: 0.52, y: 0.19, label: 'M31 • Andrómeda' }],
+        links: []
+      },
+      {
+        name: 'Pléyades (M45)',
+        stars: [
+          { x: 0.48, y: 0.43, label: 'Pléyades' },
+          { x: 0.495, y: 0.42 },
+          { x: 0.505, y: 0.44 },
+          { x: 0.485, y: 0.45 },
+          { x: 0.515, y: 0.43 }
+        ],
+        links: [[0,1],[1,2],[2,3],[3,0],[1,4]]
+      },
+      {
+        name: 'Casiopea',
+        stars: [
+          { x: 0.82, y: 0.42 },
+          { x: 0.85, y: 0.45 },
+          { x: 0.88, y: 0.43 },
+          { x: 0.91, y: 0.47 },
+          { x: 0.94, y: 0.44 }
+        ],
+        links: [[0,1],[1,2],[2,3],[3,4]]
+      },
+      {
+        name: 'Sirio',
+        stars: [{ x: 0.54, y: 0.82, label: 'Sirio' }],
+        links: []
+      }
+    ];
+
+    function initNightSky() {
+      const section = document.getElementById('acto-3-constelaciones');
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = section.clientWidth || window.innerWidth;
+      const h = section.clientHeight || window.innerHeight;
+      skyCanvas.width = w * dpr;
+      skyCanvas.height = h * dpr;
+      skyCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const spectralColors = ['#ffffff', '#bae6fd', '#e0f2fe', '#fef08a', '#fed7aa'];
+      bgStars = [];
+      for (let i = 0; i < 210; i++) {
+        bgStars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 0.5 + Math.random() * 1.5,
+          baseAlpha: 0.25 + Math.random() * 0.75,
+          twinkleSpeed: 0.015 + Math.random() * 0.03,
+          phase: Math.random() * Math.PI * 2,
+          color: spectralColors[Math.floor(Math.random() * spectralColors.length)]
+        });
+      }
+
+      if (!skyAnimId) {
+        renderNightSky();
+      }
+    }
+
+    function renderNightSky() {
+      const section = document.getElementById('acto-3-constelaciones');
+      if (!section.classList.contains('unlocked')) return;
+
+      const w = skyCanvas.width / Math.min(window.devicePixelRatio || 1, 2);
+      const h = skyCanvas.height / Math.min(window.devicePixelRatio || 1, 2);
+      skyCtx.clearRect(0, 0, w, h);
+
+      skyCtx.save();
+      skyCtx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+      skyCtx.lineWidth = 0.9;
+      skyCtx.font = '10px Outfit, sans-serif';
+      skyCtx.fillStyle = 'rgba(186, 230, 253, 0.34)';
+
+      realNov25Sky.forEach(group => {
+        group.links.forEach(([a, b]) => {
+          const sa = group.stars[a];
+          const sb = group.stars[b];
+          skyCtx.beginPath();
+          skyCtx.moveTo(sa.x * w, sa.y * h);
+          skyCtx.lineTo(sb.x * w, sb.y * h);
+          skyCtx.stroke();
+        });
+
+        group.stars.forEach(st => {
+          const sx = st.x * w;
+          const sy = st.y * h;
+          if (group.isGalaxy) {
+            const grad = skyCtx.createRadialGradient(sx, sy, 1, sx, sy, 18);
+            grad.addColorStop(0, 'rgba(253, 224, 71, 0.45)');
+            grad.addColorStop(0.5, 'rgba(125, 211, 252, 0.16)');
+            grad.addColorStop(1, 'transparent');
+            skyCtx.fillStyle = grad;
+            skyCtx.beginPath();
+            skyCtx.ellipse(sx, sy, 18, 7, -0.45, 0, Math.PI * 2);
+            skyCtx.fill();
+            skyCtx.fillStyle = 'rgba(186, 230, 253, 0.38)';
+          }
+          skyCtx.beginPath();
+          skyCtx.arc(sx, sy, 1.6, 0, Math.PI * 2);
+          skyCtx.fill();
+          if (st.label) {
+            skyCtx.fillText(st.label, sx + 6, sy + 3);
+          }
+        });
+      });
+      skyCtx.restore();
+
+      const cx = warpCenter.x * w;
+      const cy = warpCenter.y * h;
+
+      for (const s of bgStars) {
+        s.phase += s.twinkleSpeed;
+        const alpha = s.baseAlpha * (0.65 + 0.35 * Math.sin(s.phase));
+
+        if (warpActive && warpSpeed > 0.1) {
+          const dx = s.x - cx;
+          const dy = s.y - cy;
+          const dist = Math.hypot(dx, dy) || 1;
+          const nx = dx / dist;
+          const ny = dy / dist;
+
+          s.x += nx * warpSpeed * (1 + dist * 0.015);
+          s.y += ny * warpSpeed * (1 + dist * 0.015);
+
+          skyCtx.strokeStyle = s.color;
+          skyCtx.globalAlpha = Math.min(1, alpha + 0.25);
+          skyCtx.lineWidth = s.r * 1.1;
+          skyCtx.beginPath();
+          skyCtx.moveTo(s.x, s.y);
+          skyCtx.lineTo(s.x - nx * warpSpeed * 2.6, s.y - ny * warpSpeed * 2.6);
+          skyCtx.stroke();
+
+          if (s.x < -20 || s.x > w + 20 || s.y < -20 || s.y > h + 20) {
+            s.x = cx + (Math.random() - 0.5) * 90;
+            s.y = cy + (Math.random() - 0.5) * 90;
+          }
+        } else {
+          skyCtx.globalAlpha = alpha;
+          skyCtx.fillStyle = s.color;
+          skyCtx.beginPath();
+          skyCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          skyCtx.fill();
+        }
+      }
+
+      if (!warpActive && Math.random() < 0.012 && shootingStars.length < 2) {
+        shootingStars.push({
+          x: Math.random() * w * 0.85,
+          y: Math.random() * h * 0.4,
+          vx: 5 + Math.random() * 4,
+          vy: 2.5 + Math.random() * 2,
+          life: 1
+        });
+      }
+
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const sh = shootingStars[i];
+        sh.x += sh.vx;
+        sh.y += sh.vy;
+        sh.life -= 0.024;
+        if (sh.life <= 0) {
+          shootingStars.splice(i, 1);
+          continue;
+        }
+        skyCtx.save();
+        skyCtx.globalAlpha = sh.life;
+        const grad = skyCtx.createLinearGradient(sh.x, sh.y, sh.x - sh.vx * 10, sh.y - sh.vy * 10);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(1, 'transparent');
+        skyCtx.strokeStyle = grad;
+        skyCtx.lineWidth = 1.6;
+        skyCtx.beginPath();
+        skyCtx.moveTo(sh.x, sh.y);
+        skyCtx.lineTo(sh.x - sh.vx * 10, sh.y - sh.vy * 10);
+        skyCtx.stroke();
+        skyCtx.restore();
+      }
+
+      skyCtx.globalAlpha = 1;
+      skyAnimId = requestAnimationFrame(renderNightSky);
+    }
+
+    function unlockAndGoToActo3() {
+      const acto3 = document.getElementById('acto-3-constelaciones');
+      acto3.classList.add('unlocked');
+      initNightSky();
+      setTimeout(() => {
+        acto3.scrollIntoView({ behavior: 'smooth' });
+      }, 120);
+    }
+
+    /* ============================================================
+       10. GEOMETRÍA DE LAS 4 CONSTELACIONES (SVG ESTELAR)
+       ============================================================ */
+    const constellationBlueprints = {
+      // 1. Mazorca (izquierda) + Ovillo con aguja de tejer (centro) + Mini iglesia (derecha)
+      1: {
+        starCoords: { x: 0.26, y: 0.27 },
+        stars: [
+          // Mazorca (0..15)
+          { x: 70, y: 52, r: 3.4, gold: true },  // 0 punta mazorca
+          { x: 54, y: 82, r: 2.5, gold: true },  // 1
+          { x: 52, y: 125, r: 2.5, gold: true }, // 2
+          { x: 58, y: 166, r: 2.5, gold: true }, // 3
+          { x: 70, y: 184, r: 2.8, gold: true }, // 4 base mazorca
+          { x: 82, y: 166, r: 2.5, gold: true }, // 5
+          { x: 88, y: 125, r: 2.5, gold: true }, // 6
+          { x: 86, y: 82, r: 2.5, gold: true },  // 7
+          { x: 70, y: 92, r: 2.2, gold: true },  // 8 grano sup
+          { x: 70, y: 125, r: 2.4, gold: true }, // 9 grano med
+          { x: 70, y: 156, r: 2.2, gold: true }, // 10 grano inf
+          { x: 32, y: 134, r: 2.4 },             // 11 hoja izq punta
+          { x: 42, y: 192, r: 2.4 },             // 12 hoja izq curva
+          { x: 70, y: 214, r: 3.0 },             // 13 tallo base
+          { x: 108, y: 134, r: 2.4 },            // 14 hoja der punta
+          { x: 98, y: 192, r: 2.4 },             // 15 hoja der curva
+
+          // Ovillo de lana + Aguja de tejer (16..28)
+          { x: 176, y: 118, r: 2.8, pink: true }, // 16 ovillo arriba
+          { x: 148, y: 132, r: 2.6, pink: true }, // 17 ovillo sup-izq
+          { x: 148, y: 174, r: 2.6, pink: true }, // 18 ovillo inf-izq
+          { x: 176, y: 190, r: 2.8, pink: true }, // 19 ovillo abajo
+          { x: 204, y: 174, r: 2.6, pink: true }, // 20 ovillo inf-der
+          { x: 204, y: 132, r: 2.6, pink: true }, // 21 ovillo sup-der
+          { x: 154, y: 154, r: 2.2, pink: true }, // 22 trama izq
+          { x: 198, y: 154, r: 2.2, pink: true }, // 23 trama der
+          { x: 216, y: 198, r: 2.4, pink: true }, // 24 hebra suelta 1
+          { x: 196, y: 214, r: 2.6, pink: true }, // 25 hebra suelta 2
+          { x: 216, y: 72, r: 3.6, gold: true },  // 26 cabeza de aguja
+          { x: 196, y: 122, r: 2.4, gold: true }, // 27 aguja entra ovillo
+          { x: 138, y: 206, r: 3.0, gold: true }, // 28 punta aguja
+
+          // Mini Iglesia (29..42)
+          { x: 290, y: 42, r: 3.6, gold: true },  // 29 cima cruz
+          { x: 290, y: 64, r: 3.2, gold: true },  // 30 base cruz / pico techo
+          { x: 281, y: 52, r: 2.6, gold: true },  // 31 brazo izq cruz
+          { x: 299, y: 52, r: 2.6, gold: true },  // 32 brazo der cruz
+          { x: 252, y: 112, r: 2.8 },             // 33 alero izq
+          { x: 328, y: 112, r: 2.8 },             // 34 alero der
+          { x: 252, y: 212, r: 2.8 },             // 35 esquina inf-izq
+          { x: 328, y: 212, r: 2.8 },             // 36 esquina inf-der
+          { x: 280, y: 212, r: 2.4, gold: true }, // 37 puerta inf-izq
+          { x: 280, y: 172, r: 2.4, gold: true }, // 38 puerta sup-izq
+          { x: 290, y: 162, r: 2.6, gold: true }, // 39 arco puerta
+          { x: 300, y: 172, r: 2.4, gold: true }, // 40 puerta sup-der
+          { x: 300, y: 212, r: 2.4, gold: true }, // 41 puerta inf-der
+          { x: 290, y: 132, r: 3.0, pink: true }  // 42 rosetón estelar
+        ],
+        lines: [
+          // Mazorca
+          { a: 0, b: 1, cls: 'accent-gold' }, { a: 1, b: 2, cls: 'accent-gold' },
+          { a: 2, b: 3, cls: 'accent-gold' }, { a: 3, b: 4, cls: 'accent-gold' },
+          { a: 4, b: 5, cls: 'accent-gold' }, { a: 5, b: 6, cls: 'accent-gold' },
+          { a: 6, b: 7, cls: 'accent-gold' }, { a: 7, b: 0, cls: 'accent-gold' },
+          { a: 8, b: 9, cls: 'accent-gold' }, { a: 9, b: 10, cls: 'accent-gold' },
+          { a: 3, b: 11 }, { a: 11, b: 12 }, { a: 12, b: 13 },
+          { a: 5, b: 14 }, { a: 14, b: 15 }, { a: 15, b: 13 },
+
+          // Ovillo y aguja de tejer
+          { a: 16, b: 17, cls: 'accent-pink' }, { a: 17, b: 18, cls: 'accent-pink' },
+          { a: 18, b: 19, cls: 'accent-pink' }, { a: 19, b: 20, cls: 'accent-pink' },
+          { a: 20, b: 21, cls: 'accent-pink' }, { a: 21, b: 16, cls: 'accent-pink' },
+          { a: 17, b: 20, cls: 'accent-pink' }, { a: 21, b: 18, cls: 'accent-pink' },
+          { a: 22, b: 23, cls: 'accent-pink' }, { a: 20, b: 24, cls: 'accent-pink' },
+          { a: 24, b: 25, cls: 'accent-pink' },
+          { a: 26, b: 27, cls: 'accent-gold' }, { a: 27, b: 28, cls: 'accent-gold' },
+
+          // Mini Iglesia
+          { a: 29, b: 30, cls: 'accent-gold' }, { a: 31, b: 32, cls: 'accent-gold' },
+          { a: 30, b: 33 }, { a: 30, b: 34 }, { a: 33, b: 34 },
+          { a: 33, b: 35 }, { a: 34, b: 36 }, { a: 35, b: 36 },
+          { a: 37, b: 38, cls: 'accent-gold' }, { a: 38, b: 39, cls: 'accent-gold' },
+          { a: 39, b: 40, cls: 'accent-gold' }, { a: 40, b: 41, cls: 'accent-gold' }
+        ]
+      },
+
+      // 2. Universidad e Ingeniería Agronómica
+      2: {
+        starCoords: { x: 0.75, y: 0.23 },
+        stars: [
+          { x: 132, y: 34, r: 3.8, gold: true }, { x: 132, y: 54, r: 3.2 },
+          { x: 56, y: 98, r: 3.0 }, { x: 208, y: 98, r: 3.0 },
+          { x: 52, y: 204, r: 2.8 }, { x: 212, y: 204, r: 2.8 },
+          { x: 42, y: 220, r: 2.8 }, { x: 222, y: 220, r: 2.8 },
+          { x: 74, y: 98, r: 2.5 }, { x: 112, y: 98, r: 2.5 },
+          { x: 152, y: 98, r: 2.5 }, { x: 190, y: 98, r: 2.5 },
+          { x: 74, y: 204, r: 2.5 }, { x: 112, y: 204, r: 2.5 },
+          { x: 152, y: 204, r: 2.5 }, { x: 190, y: 204, r: 2.5 },
+
+          { x: 282, y: 220, r: 3.0 }, { x: 282, y: 170, r: 2.8 },
+          { x: 282, y: 120, r: 2.8, gold: true }, { x: 285, y: 68, r: 3.6, gold: true },
+          { x: 248, y: 146, r: 2.8 }, { x: 262, y: 178, r: 2.4 },
+          { x: 318, y: 128, r: 2.8 }, { x: 302, y: 162, r: 2.4 },
+          { x: 266, y: 96, r: 2.6, gold: true }, { x: 300, y: 88, r: 2.6, gold: true }
+        ],
+        lines: [
+          { a: 0, b: 1, cls: 'accent-gold' }, { a: 1, b: 2 }, { a: 1, b: 3 }, { a: 2, b: 3 },
+          { a: 4, b: 5 }, { a: 6, b: 7 }, { a: 4, b: 6 }, { a: 5, b: 7 },
+          { a: 8, b: 12 }, { a: 9, b: 13 }, { a: 10, b: 14 }, { a: 11, b: 15 },
+          { a: 16, b: 17 }, { a: 17, b: 18 }, { a: 18, b: 19, cls: 'accent-gold' },
+          { a: 17, b: 20 }, { a: 20, b: 21 }, { a: 21, b: 17 },
+          { a: 17, b: 22 }, { a: 22, b: 23 }, { a: 23, b: 17 },
+          { a: 18, b: 24, cls: 'accent-gold' }, { a: 18, b: 25, cls: 'accent-gold' }
+        ]
+      },
+
+      // 3. Familia (Papá, Mamá, Anye, Eva, Lluvia, Wendy y 2 perritos)
+      3: {
+        starCoords: { x: 0.27, y: 0.66 },
+        stars: [
+          { x: 46, y: 82, r: 3.4 }, { x: 46, y: 112, r: 2.5 }, { x: 46, y: 156, r: 2.6 },
+          { x: 36, y: 204, r: 2.4 }, { x: 56, y: 204, r: 2.4 },
+          { x: 94, y: 88, r: 3.4, pink: true }, { x: 94, y: 116, r: 2.5 }, { x: 94, y: 160, r: 2.6 },
+          { x: 84, y: 204, r: 2.4 }, { x: 104, y: 204, r: 2.4 },
+          { x: 142, y: 92, r: 3.8, gold: true }, { x: 142, y: 118, r: 2.6, gold: true }, { x: 142, y: 162, r: 2.6 },
+          { x: 132, y: 204, r: 2.4 }, { x: 152, y: 204, r: 2.4 },
+          { x: 186, y: 104, r: 3.1 }, { x: 186, y: 128, r: 2.4 }, { x: 186, y: 166, r: 2.4 },
+          { x: 178, y: 204, r: 2.3 }, { x: 194, y: 204, r: 2.3 },
+          { x: 224, y: 118, r: 3.0 }, { x: 224, y: 168, r: 2.4 },
+          { x: 217, y: 204, r: 2.2 }, { x: 231, y: 204, r: 2.2 },
+          { x: 258, y: 126, r: 3.0 }, { x: 258, y: 172, r: 2.4 },
+          { x: 251, y: 204, r: 2.2 }, { x: 265, y: 204, r: 2.2 },
+          { x: 294, y: 166, r: 2.8, gold: true }, { x: 308, y: 176, r: 2.4 },
+          { x: 315, y: 166, r: 2.2 }, { x: 293, y: 204, r: 2.2 }, { x: 309, y: 204, r: 2.2 },
+          { x: 332, y: 172, r: 2.8, pink: true }, { x: 344, y: 180, r: 2.4 },
+          { x: 350, y: 171, r: 2.2 }, { x: 331, y: 204, r: 2.2 }, { x: 345, y: 204, r: 2.2 }
+        ],
+        lines: [
+          { a: 0, b: 1 }, { a: 1, b: 2 }, { a: 2, b: 3 }, { a: 2, b: 4 },
+          { a: 5, b: 6, cls: 'accent-pink' }, { a: 6, b: 7 }, { a: 7, b: 8 }, { a: 7, b: 9 },
+          { a: 10, b: 11, cls: 'accent-gold' }, { a: 11, b: 12, cls: 'accent-gold' }, { a: 12, b: 13 }, { a: 12, b: 14 },
+          { a: 15, b: 16 }, { a: 16, b: 17 }, { a: 17, b: 18 }, { a: 17, b: 19 },
+          { a: 20, b: 21 }, { a: 21, b: 22 }, { a: 21, b: 23 },
+          { a: 24, b: 25 }, { a: 25, b: 26 }, { a: 25, b: 27 },
+          { a: 1, b: 6, cls: 'accent-gold' }, { a: 6, b: 11, cls: 'accent-gold' },
+          { a: 11, b: 16, cls: 'accent-gold' }, { a: 16, b: 20 }, { a: 20, b: 24 },
+          { a: 28, b: 29, cls: 'accent-gold' }, { a: 29, b: 30 }, { a: 28, b: 31 }, { a: 29, b: 32 },
+          { a: 33, b: 34, cls: 'accent-pink' }, { a: 34, b: 35 }, { a: 33, b: 36 }, { a: 34, b: 37 }
+        ]
+      },
+
+      // 4. Tú y Yo agarrados de la mano
+      4: {
+        starCoords: { x: 0.74, y: 0.69 },
+        stars: [
+          { x: 126, y: 64, r: 3.8 }, { x: 126, y: 86, r: 2.6 },
+          { x: 104, y: 100, r: 2.8 }, { x: 148, y: 100, r: 2.8 },
+          { x: 96, y: 148, r: 2.5 }, { x: 112, y: 158, r: 2.6 },
+          { x: 142, y: 158, r: 2.6 }, { x: 108, y: 228, r: 2.8 },
+          { x: 144, y: 228, r: 2.8 },
+          { x: 180, y: 138, r: 4.5, gold: true },
+          { x: 234, y: 74, r: 3.8, pink: true }, { x: 234, y: 94, r: 2.6, pink: true },
+          { x: 214, y: 106, r: 2.8, pink: true }, { x: 252, y: 106, r: 2.8, pink: true },
+          { x: 260, y: 152, r: 2.5, pink: true }, { x: 206, y: 178, r: 2.7, pink: true },
+          { x: 256, y: 178, r: 2.7, pink: true }, { x: 218, y: 228, r: 2.8, pink: true },
+          { x: 244, y: 228, r: 2.8, pink: true },
+          { x: 180, y: 88, r: 2.8, gold: true }, { x: 168, y: 78, r: 2.5, pink: true },
+          { x: 162, y: 88, r: 2.5, pink: true }, { x: 180, y: 106, r: 3.2, gold: true },
+          { x: 198, y: 88, r: 2.5, pink: true }, { x: 192, y: 78, r: 2.5, pink: true }
+        ],
+        lines: [
+          { a: 0, b: 1 }, { a: 1, b: 2 }, { a: 1, b: 3 },
+          { a: 2, b: 4 }, { a: 2, b: 5 }, { a: 3, b: 6 }, { a: 5, b: 6 },
+          { a: 5, b: 7 }, { a: 6, b: 8 },
+          { a: 3, b: 9, cls: 'accent-gold' }, { a: 12, b: 9, cls: 'accent-gold' },
+          { a: 10, b: 11, cls: 'accent-pink' }, { a: 11, b: 12, cls: 'accent-pink' }, { a: 11, b: 13, cls: 'accent-pink' },
+          { a: 13, b: 14, cls: 'accent-pink' }, { a: 12, b: 15, cls: 'accent-pink' }, { a: 13, b: 16, cls: 'accent-pink' },
+          { a: 15, b: 16, cls: 'accent-pink' }, { a: 15, b: 17, cls: 'accent-pink' }, { a: 16, b: 18, cls: 'accent-pink' },
+          { a: 19, b: 20, cls: 'accent-pink' }, { a: 20, b: 21, cls: 'accent-pink' },
+          { a: 21, b: 22, cls: 'accent-gold' }, { a: 22, b: 23, cls: 'accent-gold' },
+          { a: 23, b: 24, cls: 'accent-pink' }, { a: 24, b: 19, cls: 'accent-pink' }
+        ]
+      }
+    };
+
+    const discoveredConstellations = new Set();
+
+    function openConstellation(id) {
+      const viewer = document.getElementById('constellation-viewer');
+      const svgEl = document.getElementById('constellation-svg');
+
+      document.getElementById('viewer-tag').textContent = document.getElementById(`const-tag-${id}`).textContent;
+      document.getElementById('viewer-title').textContent = document.getElementById(`const-title-${id}`).textContent;
+      document.getElementById('viewer-text').textContent = document.getElementById(`const-text-${id}`).textContent;
+
+      if (id !== 'all' && constellationBlueprints[id]) {
+        warpCenter = constellationBlueprints[id].starCoords;
+      } else {
+        warpCenter = { x: 0.5, y: 0.5 };
+      }
+      warpActive = true;
+      warpSpeed = 14;
+
+      setTimeout(() => {
+        warpSpeed = 4;
+      }, 450);
+
+      setTimeout(() => {
+        warpActive = false;
+        warpSpeed = 0;
+      }, 950);
+
+      svgEl.innerHTML = '';
+      if (id === 'all') {
+        renderAllConstellationsPanorama(svgEl);
+      } else {
+        renderSingleConstellation(svgEl, constellationBlueprints[id]);
+        discoveredConstellations.add(id);
+        document.getElementById(`guide-star-${id}`).classList.add('discovered');
+        const lbl = document.getElementById(`star-label-${id}`);
+        if (!lbl.textContent.includes('✓')) {
+          lbl.textContent += ' ✓';
+        }
+        document.getElementById('sky-discovered-count').textContent = `${discoveredConstellations.size}/4`;
+
+        if (discoveredConstellations.size === 4) {
+          document.getElementById('sky-finale-btn').classList.add('visible');
+        }
+      }
+
+      document.body.classList.add('modal-open');
+      viewer.classList.add('active');
+      requestAnimationFrame(() => {
+        viewer.classList.add('visible');
+      });
+    }
+
+    function renderSingleConstellation(svgEl, blueprint) {
+      const ns = 'http://www.w3.org/2000/svg';
+
+      blueprint.lines.forEach((ln, idx) => {
+        const s1 = blueprint.stars[ln.a];
+        const s2 = blueprint.stars[ln.b];
+        const line = document.createElementNS(ns, 'line');
+        line.setAttribute('x1', s1.x);
+        line.setAttribute('y1', s1.y);
+        line.setAttribute('x2', s2.x);
+        line.setAttribute('y2', s2.y);
+        line.setAttribute('class', `const-line ${ln.cls || ''}`);
+
+        const length = Math.hypot(s2.x - s1.x, s2.y - s1.y);
+        line.style.strokeDasharray = length;
+        line.style.strokeDashoffset = length;
+        svgEl.appendChild(line);
+
+        setTimeout(() => {
+          line.style.strokeDashoffset = '0';
+        }, 180 + idx * 40);
+      });
+
+      blueprint.stars.forEach((st) => {
+        const g = document.createElementNS(ns, 'g');
+
+        const halo = document.createElementNS(ns, 'circle');
+        halo.setAttribute('cx', st.x);
+        halo.setAttribute('cy', st.y);
+        halo.setAttribute('r', st.r * 2.5);
+        halo.setAttribute('fill', st.pink ? 'rgba(244,114,182,0.28)' : st.gold ? 'rgba(250,204,21,0.28)' : 'rgba(125,211,252,0.28)');
+        g.appendChild(halo);
+
+        const core = document.createElementNS(ns, 'circle');
+        core.setAttribute('cx', st.x);
+        core.setAttribute('cy', st.y);
+        core.setAttribute('r', st.r);
+        core.setAttribute('fill', '#ffffff');
+        g.appendChild(core);
+
+        svgEl.appendChild(g);
+      });
+    }
+
+    function renderAllConstellationsPanorama(svgEl) {
+      const ns = 'http://www.w3.org/2000/svg';
+      const quadrants = [
+        { id: 1, tx: 10, ty: 6, scale: 0.44 },
+        { id: 2, tx: 190, ty: 6, scale: 0.44 },
+        { id: 3, tx: 10, ty: 138, scale: 0.44 },
+        { id: 4, tx: 190, ty: 138, scale: 0.44 }
+      ];
+
+      quadrants.forEach(q => {
+        const bp = constellationBlueprints[q.id];
+        const group = document.createElementNS(ns, 'g');
+        group.setAttribute('transform', `translate(${q.tx}, ${q.ty}) scale(${q.scale})`);
+
+        bp.lines.forEach(ln => {
+          const s1 = bp.stars[ln.a];
+          const s2 = bp.stars[ln.b];
+          const line = document.createElementNS(ns, 'line');
+          line.setAttribute('x1', s1.x);
+          line.setAttribute('y1', s1.y);
+          line.setAttribute('x2', s2.x);
+          line.setAttribute('y2', s2.y);
+          line.setAttribute('class', `const-line ${ln.cls || ''}`);
+          group.appendChild(line);
+        });
+
+        bp.stars.forEach(st => {
+          const core = document.createElementNS(ns, 'circle');
+          core.setAttribute('cx', st.x);
+          core.setAttribute('cy', st.y);
+          core.setAttribute('r', st.r * 1.2);
+          core.setAttribute('fill', '#ffffff');
+          group.appendChild(core);
+        });
+
+        svgEl.appendChild(group);
+      });
+    }
+
+    function closeConstellation() {
+      const viewer = document.getElementById('constellation-viewer');
+      viewer.classList.remove('visible');
+      document.body.classList.remove('modal-open');
+      setTimeout(() => {
+        viewer.classList.remove('active');
+      }, 450);
+    }
+
+    window.addEventListener('resize', () => {
+      if (document.getElementById('acto-3-constelaciones').classList.contains('unlocked')) {
+        initNightSky();
+      }
+    });
+
+    /* ============================================================
+       11. ARRANQUE INICIAL
+       ============================================================ */
+    window.addEventListener('load', () => {
+      spawnSunflowerShower(7);
+      const cols = ['#f472b6', '#38bdf8', '#facc15', '#a78bfa', '#fb7185', '#34d399'];
+      const sec = document.getElementById('acto-1-wrapped');
+      cols.forEach((c, i) => {
+        const b = document.createElement('div');
+        b.className = 'balloon';
+        b.style.cssText = `--c:${c};--d:${11 + (i % 3) * 3}s;--dl:${-i * 2.2}s;left:${6 + i * 16}%`;
+        sec.appendChild(b);
+      });
+      requestAnimationFrame(tickProgress);
+    });
+  </script>
+</body>
+</html>
